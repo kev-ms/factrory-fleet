@@ -7,11 +7,6 @@ metadata:
     app.kubernetes.io/name: {{gitops.name}}
 spec:
   replicas: 1
-  strategy:
-    type: RollingUpdate
-    rollingUpdate:
-       maxSurge: 1
-       maxUnavailable: 1
   selector:
     matchLabels:
       app: {{gitops.name}}
@@ -24,14 +19,36 @@ spec:
         - name: app
           image: {{gitops.imageName}}:{{gitops.imageTag}}
           imagePullPolicy: Always
+          args:
+          - --region
+          - {{gitops.config.region}}
+          - --zone
+          - {{gitops.config.zone}}
+          - --district
+          - {{gitops.config.district}}
+          - --store
+          - {{gitops.config.store}}
           ports:
             - name: http
               containerPort: 8080
               protocol: TCP
-
+          readinessProbe:
+            initialDelaySeconds: 10
+            httpGet:
+              path: /tlog/readyz
+              port: 8080
+          livenessProbe:
+            initialDelaySeconds: 60
+            periodSeconds: 60
+            httpGet:
+              path: /tlog/healthz
+              port: 8080
           resources:
             limits:
-              cpu: 100m
+              cpu: 400m
+              memory: 128Mi
+            requests:
+              cpu: 200m
               memory: 64Mi
 
 ---
@@ -66,7 +83,9 @@ spec:
   http:
     - match:
         - uri:
-            prefix: "/heartbeat"
+            prefix: "/tlog"
+      rewrite:
+        uri: "/tlog"
       route:
         - destination:
             host: {{gitops.name}}
