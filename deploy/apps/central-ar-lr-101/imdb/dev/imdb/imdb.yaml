@@ -24,7 +24,7 @@ spec:
         - name: app
           image: ghcr.io/cse-labs/imdb-app:latest
           imagePullPolicy: Always
-          args: 
+          args:
           - --in-memory
           - --zone
           - central-ar-lr
@@ -40,6 +40,7 @@ spec:
               memory: 512Mi
 
 ---
+
 apiVersion: v1
 kind: Service
 metadata:
@@ -54,23 +55,25 @@ spec:
       name: http
   selector:
     app: imdb
-    
+
 ---
-apiVersion: traefik.containo.us/v1alpha1
-kind: IngressRoute
+
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
 metadata:
-  name: imdb-https
-  namespace: default
+  name: imdb-vs
+  namespace: imdb
 spec:
-  entryPoints:
-    - websecure
-  routes:
-    - match: Host(`central-ar-lr-101.cseretail.com`)
-      kind: Rule
-      services:
-        - name: imdb
-          namespace: imdb
-          kind: Service
-          port: 8080
-  tls:
-    secretName: ssl-cert
+  hosts:
+    - "central-ar-lr-101.cseretail.com"
+  gateways:
+    - istio-system/istio-gateway
+  http:
+    - match:
+        - uri:
+            prefix: "/"
+      route:
+        - destination:
+            host: imdb
+            port:
+              number: 8080
