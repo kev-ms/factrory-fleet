@@ -40,9 +40,10 @@
 
 ## Create a Codespace
 
-> Create your Codespace from the main branch
+> Since we use GitHub secrets, do not fork the repo or you won't get the secrets and nothing will work
 
-- Click on `Code` then click `New Codespace`
+- Create your Codespace from the main branch
+  - Click on `Code` then click `New Codespace`
 
 Once Codespaces is running:
 

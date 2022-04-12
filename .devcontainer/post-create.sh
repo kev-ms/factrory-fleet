@@ -7,9 +7,10 @@ echo "$(date +'%Y-%m-%d %H:%M:%S')    post-create start" >> "$HOME/status"
 
 # secrets are not available during on-create
 
+mkdir -p "$HOME/.ssh"
+
 if [ "$PAT" != "" ]
 then
-    mkdir -p "$HOME/.ssh"
     echo "$PAT" > "$HOME/.ssh/akdc.pat"
     chmod 600 "$HOME/.ssh/akdc.pat"
 fi
