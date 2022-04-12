@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: testapp
+  namespace: testapp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: testapp
+  template:
+    metadata:
+      labels:
+        app: testapp
+      annotations:
+        prometheus.io/scrape: 'true'
+        prometheus.io/port: '8080'
+    spec:
+      containers:
+        - name: app
+          image: ghcr.io/retaildevcrews/testapp:beta
+          imagePullPolicy: Always
+
+          args:
+          - --zone
+          - west-wa-spokane
+          - --region
+          - west
+
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP
