@@ -17,21 +17,22 @@ metadata:
 
 ---
 
-apiVersion: traefik.containo.us/v1alpha1
-kind: IngressRoute
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
 metadata:
-  name: munishwebapi-https
-  namespace: default
+  name: munishwebapi-vs
+  namespace: munishwebapi
 spec:
-  entryPoints:
-    - websecure
-  routes:
-    - match: Host(`central-india-delhi-101.cseretail.com`)
-      kind: Rule
-      services:
-        - name: munishwebapi
-          namespace: munishwebapi
-          kind: Service
-          port: 8080
-  tls:
-    secretName: ssl-cert
+  hosts:
+    - "central-india-delhi-101.cseretail.com"
+  gateways:
+    - istio-system/istio-gateway
+  http:
+    - match:
+        - uri:
+            prefix: "/"
+      route:
+        - destination:
+            host: munishwebapi
+            port:
+              number: 8080
