@@ -39,7 +39,7 @@ spec:
               cpu: 500m
               memory: 512Mi
       imagePullSecrets:
-        - name: default/acrtest
+        - name: acrtest
 
 ---
 
