@@ -19,7 +19,7 @@ spec:
     metadata:
       labels:
         app: imdb
-        deploy: deploy-22-04-11-06-57-06
+        deploy: deploy-22-04-13-01-05-58
     spec:
       containers:
         - name: app
@@ -42,6 +42,7 @@ spec:
               memory: 512Mi
 
 ---
+
 apiVersion: v1
 kind: Service
 metadata:
@@ -58,21 +59,23 @@ spec:
     app: imdb
 
 ---
-apiVersion: traefik.containo.us/v1alpha1
-kind: IngressRoute
+
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
 metadata:
-  name: imdb-https
-  namespace: default
+  name: imdb-vs
+  namespace: imdb
 spec:
-  entryPoints:
-    - websecure
-  routes:
-    - match: Host(`central-il-chi-101.cseretail.com`)
-      kind: Rule
-      services:
-        - name: imdb
-          namespace: imdb
-          kind: Service
-          port: 8080
-  tls:
-    secretName: ssl-cert
+  hosts:
+    - "central-il-chi-101.cseretail.com"
+  gateways:
+    - istio-system/istio-gateway
+  http:
+    - match:
+        - uri:
+            prefix: "/"
+      route:
+        - destination:
+            host: imdb
+            port:
+              number: 8080
