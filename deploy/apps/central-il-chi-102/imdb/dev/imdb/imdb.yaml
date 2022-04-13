@@ -19,7 +19,7 @@ spec:
     metadata:
       labels:
         app: imdb
-        deploy: deploy-22-04-13-01-05-58
+        deploy: deploy-22-04-13-02-47-53
     spec:
       containers:
         - name: app
@@ -27,7 +27,6 @@ spec:
           imagePullPolicy: Always
           args:
           - --in-memory
-          - --prometheus
           - --zone
           - central-il-chi
           - --region
