@@ -19,7 +19,7 @@
   - If you get a 403 or 404 error make sure you joined the org / accepted your invite
   - <https://github.com/cse-labs/private-test>
   - <https://github.com/retaildevcrews/private-test>
-- Go through the Kubernetes in Codespaces inner-loop hands-on lab
+- Go through the Kubernetes in Codespaces inner-loop hands-on lab [here](https://github.com/cse-labs/kubernetes-in-codespaces)
   - Repeat until you are comfortable with Codespaces, Kubernetes, Prometheus, Fluent Bit, Grafana, K9s, and our inner-loop process (everything builds on this)
 - Go through the GitOps Automation [Quick Start](https://github.com/bartr/autogitops)
   - Repeat until you are comfortable (GitOps builds on this)
