@@ -32,6 +32,7 @@ git -C ../webvalidate pull
 git -C ../imdb-app pull
 git -C ../inner-loop pull
 git -C ../vtlog pull
+git -C ../cli pull
 
 echo "post-create complete"
 echo "$(date +'%Y-%m-%d %H:%M:%S')    post-create complete" >> "$HOME/status"
