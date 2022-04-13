@@ -1,0 +1,10 @@
+{
+    "imageName": "acrretailedge.azurecr.io/imdb/imdb-app:latest",
+    "imageTag": "latest",
+    "name": "privateapp",
+    "namespace": "privateapp",
+    "targetDir": "apps",
+    "targets": [
+        "all"
+    ]
+}
