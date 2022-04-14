@@ -1,0 +1,9 @@
+{
+	"environment": "dev",
+	"region": "east",
+	"zone": "east-ny-nyc",
+	"district": "east-ny-nyc",
+	"store": "east-ny-nyc-101",
+	"domain": "east-ny-nyc-101.cseretail.com"
+}
+
