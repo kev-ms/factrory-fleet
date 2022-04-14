@@ -12,3 +12,5 @@ flt create --gitops --branch pilot -g pilot-fleet --ssl cseretail.com -c east-ny
 flt create --gitops --branch pilot -g pilot-fleet --ssl cseretail.com -c east-ny-nyc-102
 flt create --gitops --branch pilot -g pilot-fleet --ssl cseretail.com -c west-or-pdx-101
 flt create --gitops --branch pilot -g pilot-fleet --ssl cseretail.com -c west-or-pdx-102
+
+flt create --gitops --ssl cseretail.com -g pilot-fleet -c corp-monitoring-pilot
