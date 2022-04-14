@@ -1,8 +1,0 @@
-{
-	"environment": "dev",
-	"region": "corp",
-	"zone": "corp-monitoring-pg",
-	"district": "corp-monitoring-pg",
-	"store": "corp-monitoring-pg",
-	"domain": "corp-monitoring-pg.cseretail.com"
-}
