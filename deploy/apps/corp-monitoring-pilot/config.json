@@ -1,0 +1,9 @@
+{
+	"environment": "dev",
+	"region": "corp",
+	"zone": "corp-monitoring-pilot",
+	"district": "corp-monitoring-pilot",
+	"store": "corp-monitoring-pilot",
+	"domain": "corp-monitoring-pilot.cseretail.com"
+}
+
