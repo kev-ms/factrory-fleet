@@ -4,5 +4,7 @@
     "name": "prometheus",
     "namespace": "prometheus",
     "targetDir": "apps",
-    "targets": null
+    "targets": [
+        "store:corp-monitoring-pilot"
+    ]
 }
