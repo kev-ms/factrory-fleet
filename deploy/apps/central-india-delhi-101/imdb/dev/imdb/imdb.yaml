@@ -19,7 +19,7 @@ spec:
     metadata:
       labels:
         app: imdb
-        deploy: deploy-22-04-14-18-29-13
+        deploy: deploy-22-04-14-18-31-15
     spec:
       containers:
         - name: app
