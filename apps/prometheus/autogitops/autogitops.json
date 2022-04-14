@@ -1,0 +1,8 @@
+{
+    "imageName": "prom/prometheus",
+    "imageTag": "latest",
+    "name": "prometheus",
+    "namespace": "prometheus",
+    "targetDir": "apps",
+    "targets": []
+}

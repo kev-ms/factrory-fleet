@@ -1,0 +1,8 @@
+{
+    "imageName": "ghcr.io/cse-labs/webv-red",
+    "imageTag": "latest",
+    "name": "webv",
+    "namespace": "webv",
+    "targetDir": "apps",
+    "targets": [ ]
+}
