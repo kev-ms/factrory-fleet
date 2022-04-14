@@ -5,7 +5,5 @@
     "name": "fluent-bit",
     "namespace": "fluent-bit",
     "targetDir": "apps",
-    "targets": [
-        "store:corp-monitoring-pilot"
-    ]
+    "targets": null
 }
