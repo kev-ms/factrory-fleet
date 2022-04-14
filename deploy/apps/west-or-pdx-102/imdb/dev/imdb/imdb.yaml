@@ -19,7 +19,7 @@ spec:
     metadata:
       labels:
         app: imdb
-        deploy: deploy-22-04-14-19-16-59
+        deploy: deploy-22-04-14-20-00-36
     spec:
       containers:
         - name: app
@@ -28,9 +28,9 @@ spec:
           args:
           - --in-memory
           - --zone
-          - central-il-chi
+          - west-or-pdx
           - --region
-          - central
+          - west
           ports:
             - name: http
               containerPort: 8080
@@ -66,7 +66,7 @@ metadata:
   namespace: imdb
 spec:
   hosts:
-    - "central-il-chi-101.cseretail.com"
+    - "west-or-pdx-102.cseretail.com"
   gateways:
     - istio-system/istio-gateway
   http:
