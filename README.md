@@ -1,4 +1,4 @@
-# Retail Edge Onboarding Repo
+# Retail Edge Onboarding
 
 ![License](https://img.shields.io/badge/license-MIT-green.svg)
 
@@ -8,6 +8,7 @@
 - bartr
 - devwag
 - kevinshah
+- wabrez
 
 ## Onboarding
 
@@ -281,6 +282,10 @@ git push
 kic cluster create
 
 ```
+
+## Create a Fleet
+
+- Create a [Fleet](docs/CreateFleet.md)
 
 ## Observability
 
