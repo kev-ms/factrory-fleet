@@ -1,3 +1,4 @@
 ## ignore fleet/bin/*
 bin/kic
 bin/flt
+cluster*
