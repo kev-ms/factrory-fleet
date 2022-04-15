@@ -1,22 +1,29 @@
-# Retail Edge Onboarding Repo
+# Retail Edge Onboarding
 
 ![License](https://img.shields.io/badge/license-MIT-green.svg)
 
 ## Platform Team Contacts
 
-- anflinch  bartr  kevinshah
+- anflinch
+- bartr
+- devwag
+- kevinshah
+- wabrez
 
 ## Onboarding
 
-- Request a test fleet from the Platform Team (contact bartr)
-- Follow the [instructions](https://github.com/cse-labs/moss) and join the `Microsoft`, `cse-labs` and `retaildevcrews` GitHub orgs
-  - Validation repos
-    - If you get a 403 or 404 error make sure you joined the orgs
-    - <https://github.com/cse-labs/private-test>
-    - <https://github.com/retaildevcrews/private-test>
-- Go through the Kubernetes in Codespaces inner-loop hands-on lab
+- Request a test fleet from the Platform Team
+- Follow the [instructions](https://github.com/cse-labs/moss) and join the `Microsoft` and `cse-labs` GitHub orgs
+- Request an invitation to the RetailDevCrews GitHub Org from the platform team
+  - Accept the invitation
+- Validation repos
+  - If you get a 403 or 404 error make sure you joined the org / accepted your invite
+  - <https://github.com/cse-labs/private-test>
+  - <https://github.com/retaildevcrews/private-test>
+- Go through the Kubernetes in Codespaces inner-loop hands-on lab [here](https://github.com/cse-labs/kubernetes-in-codespaces)
   - Repeat until you are comfortable with Codespaces, Kubernetes, Prometheus, Fluent Bit, Grafana, K9s, and our inner-loop process (everything builds on this)
 - Go through the GitOps Automation [Quick Start](https://github.com/bartr/autogitops)
+  - Repeat until you are comfortable (GitOps builds on this)
 
 ## Setup your GitHub PAT
 
@@ -53,7 +60,7 @@ Once Codespaces is running:
 
 ## Test Fleet
 
-- Request a test fleet from the Platform Team (contact bartr, anflinch or kevinshah)
+- Request a test fleet from the Platform Team
 - Once your fleet is created, the Platform Team will provide the branch name
 - Do all of your work in this branch
 - Do not PR your branch to main
@@ -275,6 +282,10 @@ git push
 kic cluster create
 
 ```
+
+## Create a Fleet
+
+- Create a [Fleet](docs/CreateFleet.md)
 
 ## Observability
 

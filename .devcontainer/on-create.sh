@@ -78,7 +78,7 @@ git clone https://github.com/microsoft/webvalidate
 git clone https://github.com/cse-labs/imdb-app
 git clone https://github.com/cse-labs/kubernetes-in-codespaces inner-loop
 git clone https://github.com/retaildevcrews/vtlog
-git clone https://github.com/retaildevcrews/re-cli cli
+git clone https://github.com/retaildevcrews/akdc cli
 cd "$REPO_BASE" || exit
 
 # echo "generating kic completion"
