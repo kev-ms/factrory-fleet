@@ -5,6 +5,7 @@ metadata:
   namespace: privateapp
   labels:
     app.kubernetes.io/name: privateapp
+    foo: bar
 spec:
   replicas: 1
   strategy:
