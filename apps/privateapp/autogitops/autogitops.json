@@ -1,6 +1,6 @@
 {
     "imageName": "acrretailedge.azurecr.io/imdb/imdb-app",
-    "imageTag": "latest",
+    "imageTag": "v2",
     "name": "privateapp",
     "namespace": "privateapp",
     "targetDir": "apps",
