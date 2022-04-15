@@ -8,7 +8,7 @@ registries:
     mirrors:
       "acrretailedge.azurecr.io":
         endpoint:
-          - http://my.company.registry:5000
+          - https://acrretailedge.azurecr.io
     configs:
       "acrretailedge.azurecr.io":
         auth:
