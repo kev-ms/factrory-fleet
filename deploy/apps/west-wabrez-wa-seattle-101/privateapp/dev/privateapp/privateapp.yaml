@@ -23,7 +23,7 @@ spec:
     spec:
       containers:
         - name: app
-          image: acrretailedge.azurecr.io/imdb/imdb-app:latest
+          image: acrretailedge.azurecr.io/imdb/imdb-app:v2
           imagePullPolicy: Always
           args:
           - --in-memory
