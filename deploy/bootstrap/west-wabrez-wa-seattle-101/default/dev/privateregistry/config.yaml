@@ -6,11 +6,11 @@ registries:
     name: acrretailedge
   config: |
     mirrors:
-      "acrretailedge.azurecr.io:443":
+      "acrretailedge.azurecr.io":
         endpoint:
-          - https://acrretailedge.azurecr.io:443
+          - https://acrretailedge.azurecr.io
     configs:
-      "acrretailedge.azurecr.io:443":
+      "acrretailedge.azurecr.io":
         auth:
           username: acrretailedge
           password: xmw6zngF45aEiAs=fPjQBGgafHADB344
