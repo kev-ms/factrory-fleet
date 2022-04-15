@@ -13,6 +13,7 @@ if [ "$(git branch --show-current)" != "main" ]
 then
     echo "Updating Codespaces"
     git restore -s origin/main README.md
+    git restore -s origin/main docs
     git restore -s origin/main .devcontainer
 fi
 

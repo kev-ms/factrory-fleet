@@ -16,8 +16,8 @@ then
 fi
 
 # add shared ssh key
-echo "$ID_RSA" | base64 -d > "$HOME/.ssh/id_rsa"
-echo "$ID_RSA_PUB" | base64 -d > "$HOME/.ssh/id_rsa.pub"
+echo "$AKDC_ID_RSA" | base64 -d > "$HOME/.ssh/id_rsa"
+echo "$AKDC_ID_RSA_PUB" | base64 -d > "$HOME/.ssh/id_rsa.pub"
 
 # set file mode
 chmod 600 "$HOME"/.ssh/id*
