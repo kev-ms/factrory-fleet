@@ -1,0 +1,7 @@
+{
+    "name": "privateregistry",
+    "targetDir": "bootstrap",
+    "targets": [
+        "all"
+    ]
+}
