@@ -1,8 +1,0 @@
-{
-    "name": "privateregistry",
-    "namespace": "default",
-    "targetDir": "bootstrap",
-    "targets": [
-        "all"
-    ]
-}
