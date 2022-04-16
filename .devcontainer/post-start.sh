@@ -11,10 +11,8 @@ git -C ../cli pull
 # update the branch
 if [ "$(git branch --show-current)" != "main" ]
 then
-    echo "Updating Codespaces"
-    git restore -s origin/main README.md
-    git restore -s origin/main docs
-    git restore -s origin/main .devcontainer
+    echo "Synching with main branch"
+    git restore -s origin/main README.md docs .devcontainer .github
 fi
 
 # update the base docker images
