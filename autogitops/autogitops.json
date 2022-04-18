@@ -1,8 +1,11 @@
 {
-  "apps": [
-    "heartbeat",
-    "imdb",
-    "istio"
-  ],
-  "appsDir": "apps"
+    "apps": [
+        "heartbeat",
+        "imdb",
+        "istio"
+    ],
+    "appsDir": "apps",
+    "targets": [
+        "region:west"
+    ]
 }
