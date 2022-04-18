@@ -68,7 +68,7 @@ data:
       scrape_interval: 5s
       evaluation_interval: 5s
       external_labels:
-        origin_prometheus: kshahtest-west
+        origin_prometheus: kshahtest-central
     rule_files:
       - /etc/prometheus/prometheus.rules
     remote_write:
