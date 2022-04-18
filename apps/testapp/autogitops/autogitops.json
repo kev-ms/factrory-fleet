@@ -1,17 +1,19 @@
 {
-  "name": "testapp",
-  "namespace": "testapp",
-  "imageName": "ghcr.io/retaildevcrews/testapp",
-  "imageTag": "beta",
-  "targetDir": "apps",
-  "targets": [],
-  "args": [],
-  "port": 8080,
-  "nodePort": 30080,
-  "cpuLimit": "1000m",
-  "memoryLimit": "128Mi",
-  "cpuRequest": "400m",
-  "memoryRequest": "64Mi",
-  "readinessProbe": "/readyz",
-  "livenessProbe": "/healthz"
+    "args": [],
+    "cpuLimit": "1000m",
+    "cpuRequest": "400m",
+    "imageName": "ghcr.io/retaildevcrews/testapp",
+    "imageTag": "beta",
+    "livenessProbe": "/healthz",
+    "memoryLimit": "128Mi",
+    "memoryRequest": "64Mi",
+    "name": "testapp",
+    "namespace": "testapp",
+    "nodePort": 30080,
+    "port": 8080,
+    "readinessProbe": "/readyz",
+    "targetDir": "apps",
+    "targets": [
+        "region:west"
+    ]
 }
