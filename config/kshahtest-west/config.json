@@ -1,0 +1,8 @@
+{
+	"environment": "dev",
+	"region": "kshahtest",
+	"zone": "kshahtest-west",
+	"district": "kshahtest-west",
+	"store": "kshahtest-west",
+	"domain": "kshahtest-west."
+}
