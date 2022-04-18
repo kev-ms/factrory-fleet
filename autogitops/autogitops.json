@@ -5,7 +5,5 @@
         "istio"
     ],
     "appsDir": "apps",
-    "targets": [
-        "region:west"
-    ]
+    "targets": null
 }
