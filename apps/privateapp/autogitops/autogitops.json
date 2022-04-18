@@ -1,6 +1,6 @@
 {
     "imageName": "ghcr.io/wbreza/imdb-app",
-    "imageTag": "v2",
+    "imageTag": "latest",
     "name": "privateapp",
     "namespace": "privateapp",
     "targetDir": "apps",
