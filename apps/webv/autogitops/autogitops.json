@@ -4,7 +4,5 @@
     "name": "webv",
     "namespace": "webv",
     "targetDir": "apps",
-    "targets": [
-        "store:corp-monitoring-pg"
-    ]
+    "targets": null
 }
