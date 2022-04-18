@@ -5,6 +5,6 @@
     "namespace": "heartbeat",
     "targetDir": "bootstrap",
     "targets": [
-        "region:central"
+        "all"
     ]
 }
