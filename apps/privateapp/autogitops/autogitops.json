@@ -1,5 +1,5 @@
 {
-    "imageName": "acrretailedge.azurecr.io/imdb/imdb-app",
+    "imageName": "ghcr.io/wbreza/imdb-app",
     "imageTag": "v2",
     "name": "privateapp",
     "namespace": "privateapp",

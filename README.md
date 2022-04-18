@@ -82,6 +82,22 @@ Once Codespaces is running:
 
   ```
 
+## Sync Your Branch With Main Branch
+
+> FleetReadme.md is a fleet specific doc and is not synched with main
+
+- The following directories are automatically synched with the main branch when you start a Codespace
+  - README.md
+  - docs
+  - .devcontainer
+  - .github
+- You can manually sync by running `.devcontainer/sync-main-branch.sh` from Codespaces
+- The changes are not committed or pushed to your repo to avoid overwriting files
+  - You should commit and push the changes after reviewing
+- You can control what is synced by modifying
+  - .devcontainer/post-start.sh
+  - .devcontainer/sync-main-branch.sh
+
 ## Check your Fleet
 
 > flt is the fleet CLI provided by Retail Edge / Pilot-in-a-Box
