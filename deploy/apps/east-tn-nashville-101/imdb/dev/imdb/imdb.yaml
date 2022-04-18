@@ -27,9 +27,9 @@ spec:
           args:
           - --in-memory
           - --zone
-          - central-ar-lr
+          - east-tn-nashville
           - --region
-          - central
+          - east
           ports:
             - name: http
               containerPort: 8080
@@ -65,7 +65,7 @@ metadata:
   namespace: imdb
 spec:
   hosts:
-    - "central-ar-lr-101.cseretail.com"
+    - "east-tn-nashville-101.cseretail.com"
   gateways:
     - istio-system/istio-gateway
   http:
