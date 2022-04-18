@@ -5,5 +5,7 @@
     "name": "fluent-bit",
     "namespace": "fluent-bit",
     "targetDir": "apps",
-    "targets": [ ]
+    "targets": [
+        "store:corp-monitoring-pg"
+    ]
 }
