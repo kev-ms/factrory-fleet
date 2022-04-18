@@ -5,6 +5,6 @@
     "namespace": "webv",
     "targetDir": "apps",
     "targets": [
-        "kshahtest-west"
+        "kshahtest-central"
     ]
 }
