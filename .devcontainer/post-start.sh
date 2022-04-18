@@ -6,7 +6,7 @@ echo "post-start start"
 echo "$(date +'%Y-%m-%d %H:%M:%S')    post-start start" >> "$HOME/status"
 
 # update the cli
-git -C ../cli pull
+# git -C ../cli pull
 
 # update the branch
 if [ "$(git branch --show-current)" != "main" ]
