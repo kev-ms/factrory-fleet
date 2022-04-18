@@ -23,7 +23,7 @@ spec:
     spec:
       containers:
         - name: app
-          image: ghcr.io/wbreza/imdb-app:v2
+          image: ghcr.io/wbreza/imdb-app:latest
           imagePullPolicy: Always
           args:
           - --in-memory
