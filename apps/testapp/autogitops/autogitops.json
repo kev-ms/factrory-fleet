@@ -1,0 +1,17 @@
+{
+  "name": "testapp",
+  "namespace": "testapp",
+  "imageName": "ghcr.io/retaildevcrews/testapp",
+  "imageTag": "beta",
+  "targetDir": "apps",
+  "targets": [],
+  "args": [],
+  "port": 8080,
+  "nodePort": 30080,
+  "cpuLimit": "1000m",
+  "memoryLimit": "128Mi",
+  "cpuRequest": "400m",
+  "memoryRequest": "64Mi",
+  "readinessProbe": "/readyz",
+  "livenessProbe": "/healthz"
+}
