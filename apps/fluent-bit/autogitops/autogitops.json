@@ -4,7 +4,5 @@
     "name": "fluent-bit",
     "namespace": "fluent-bit",
     "targetDir": "apps",
-    "targets": [
-        "kshahtest-west"
-    ]
+    "targets": null
 }
