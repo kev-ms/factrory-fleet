@@ -3,6 +3,7 @@
 flt delete central-tx-atx-501 &
 flt delete central-tx-atx-502 &
 flt delete central-tx-atx-503 &
+flt delete central-tx-atx-504 &
 
 rm ips
 
