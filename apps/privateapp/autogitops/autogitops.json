@@ -1,5 +1,5 @@
 {
-    "imageName": "ghcr.io/wbreza/imdb-app",
+    "imageName": "ghcr.io/retaildevcrews/private-app",
     "imageTag": "latest",
     "name": "privateapp",
     "namespace": "privateapp",
