@@ -8,13 +8,6 @@ echo "$(date +'%Y-%m-%d %H:%M:%S')    post-start start" >> "$HOME/status"
 # update the cli
 git -C ../cli pull
 
-# update the branch
-if [ "$(git branch --show-current)" != "main" ]
-then
-    echo "Synching with main branch"
-    .devcontainer/sync-main-branch.sh
-fi
-
 # update the base docker images
 docker pull mcr.microsoft.com/dotnet/sdk:5.0-alpine
 docker pull mcr.microsoft.com/dotnet/aspnet:5.0-alpine
