@@ -54,7 +54,6 @@ spec:
           - "5000"
           - --prometheus
           - --run-loop
-          - --verbose
           - --server
           - https://kshahtest-central.cseretail.com
           - --files
