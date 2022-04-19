@@ -1,6 +1,7 @@
 #!/bin/bash
 
-flt delete central-tx-atx-501
+flt delete central-tx-atx-501 &
+flt delete central-tx-atx-502 &
 
 rm ips
 
