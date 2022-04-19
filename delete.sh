@@ -1,11 +1,12 @@
 #!/bin/bash
 
-# duplicate this line for each cluster
-# flt delete yourClusterName
+flt delete central-tx-atx-501
 
-# rm ips
+rm ips
 
-# az group delete -y --no-wait -g yourResourceGroup
+az group delete -y --no-wait -g jofultz-fleet
 
-echo "To delete your branch upstream, use"
-echo -e "\n\t git push origin --delete <your-fleet> \n"
+git pull
+git restore -s origin/main config deploy
+git commit -am "restore config and deploy"
+git push
