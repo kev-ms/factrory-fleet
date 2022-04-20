@@ -1,11 +1,16 @@
 #!/bin/bash
 
-flt delete central-tx-atx-501 &
+echo "uncomment delete.sh commands to run it"
 
-rm ips
+# flt delete central-tx-atx-512 &
+# flt delete east-ga-atl-512 &
+# flt delete west-wa-sea-512 &
+# flt delete corp-monitoring-jofultz &
 
-az group delete -y --no-wait -g jofultz-fleet
+# rm ips
 
-git pull
-git commit -am "flt delete"
-git push
+# az group delete -y --no-wait -g jofultz-fleet
+
+# git pull
+# git commit -am "flt delete"
+# git push
