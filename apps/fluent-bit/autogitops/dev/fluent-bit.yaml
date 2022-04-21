@@ -52,7 +52,6 @@ data:
         Flush         1
         Log_Level     info
         Daemon        off
-        Parsers_File  parsers.conf
         HTTP_Server   On
         HTTP_Listen   0.0.0.0
         HTTP_Port     2020
@@ -60,9 +59,6 @@ data:
     @INCLUDE filter-kubernetes.conf
     @INCLUDE output.conf
   output.conf: |
-    [OUTPUT]
-        Name              stdout
-        Match             kube.var.log.containers.webv*.*
     [OUTPUT]
         Name              loki
         Match             kube.var.log.containers.webv*.*
@@ -80,7 +76,7 @@ data:
         Name              tail
         Tag               kube.*
         Path              /var/log/containers/webv*.log
-        Parser            cri
+        multiline.parser  docker, cri
         DB                /var/log/flb_kube.db
         Mem_Buf_Limit     5MB
         Skip_Long_Lines   Off
@@ -89,7 +85,7 @@ data:
         Name              tail
         Tag               kube.*
         Path              /var/log/containers/ai-order-accuracy*.log
-        Parser            cri
+        multiline.parser  docker, cri
         DB                /var/log/flb_kube.db
         Mem_Buf_Limit     5MB
         Skip_Long_Lines   Off
@@ -98,7 +94,7 @@ data:
         Name              tail
         Tag               kube.*
         Path              /var/log/containers/imdb*.log
-        Parser            cri
+        multiline.parser  docker, cri
         DB                /var/log/flb_kube.db
         Mem_Buf_Limit     5MB
         Skip_Long_Lines   Off
@@ -138,31 +134,6 @@ data:
         Name                grep
         Match               kube.*
         Exclude             status_str /^2.*/
-  parsers.conf: |
-    [PARSER]
-        Name        json
-        Format      json
-        Time_Key    time
-        Time_Format %d/%b/%Y:%H:%M:%S %z
-        Time_Keep   Off
-    [PARSER]
-        Name        syslog
-        Format      regex
-        Regex       ^\<(?<pri>[0-9]+)\>(?<time>[^ ]* {1,2}[^ ]* [^ ]*) (?<host>[^ ]*) (?<ident>[a-zA-Z0-9_\/\.\-]*)(?:\[(?<pid>[0-9]+)\])?(?:[^\:]*\:)? *(?<message>.*)$
-        Time_Key    time
-        Time_Format %b %d %H:%M:%S
-    [PARSER]
-        Name        cri
-        Format      regex
-        Regex       ^(?<time>[^ ]+) (?<stream>stdout|stderr) (?<logtag>[^ ]*) (?<log>.*)$
-        Time_Key    time
-        Time_Format %Y-%m-%dT%H:%M:%S.%L%z
-    [PARSER]
-        Name docker
-        Format json
-        Time_Key time
-        Time_Format %Y-%m-%dT%H:%M:%S.%L
-        Time_Keep Off
 
 ---
 
