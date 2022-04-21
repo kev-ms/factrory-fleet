@@ -62,11 +62,11 @@ data:
     [OUTPUT]
         Name              loki
         Match             kube.var.log.containers.webv*.*
-        Host              logs-prod-us-central1.grafana.net
+        Host              {{gitops.lokiURL}}
         Port              443
         tls               on
         tls.verify        on
-        http_user         129904
+        http_user         {{gitops.lokiUser}}
         http_passwd       ${LOKI_PASSWORD}
         Labels            job=webv-{{gitops.jobSuffix}}
         label_keys        $StatusCode,$Server
