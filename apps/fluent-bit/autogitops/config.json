@@ -1,0 +1,9 @@
+{
+    "imageName": "fluent/fluent-bit",
+    "imageTag": "1.9.0",
+    "jobSuffix": "{your fleet name}",
+    "name": "fluent-bit",
+    "namespace": "fluent-bit",
+    "targetDir": "apps",
+    "targets": []
+}
