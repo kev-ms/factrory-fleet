@@ -169,7 +169,7 @@ spec:
             - name: LOKI_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: fluent-bit-loki-pw
+                  name: fluent-bit-secrets
                   key: fluent-bit.key
           ports:
             - containerPort: 2020
