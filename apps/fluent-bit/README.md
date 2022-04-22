@@ -59,6 +59,8 @@ These values are located in the Grafana Cloud Portal.
 
 The configuration yaml file: [fluent-bit.yaml](https://github.com/retaildevcrews/edge-gitops/blob/apps/apps/fluent-bit/autogitops/dev/fluent-bit.yaml)
 
+For more information on fluent bit, see their [documentation](https://docs.fluentbit.io/manual/concepts/data-pipeline).
+
 ### Inputs
 
 By default, the inputs are logs from containers named webv*, ai-order-accuracy*, and imdb*. To use logs from other apps, you will need to create a new input block and update the Path parameter to match the new app container name.

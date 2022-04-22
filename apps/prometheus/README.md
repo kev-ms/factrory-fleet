@@ -80,3 +80,5 @@ The scrape configs specify what targets to scrape metrics from and which metrics
           action: drop
 
 ```
+
+For more information on Prometheus configuration, see their [documentation](https://prometheus.io/docs/prometheus/latest/configuration/configuration/).
