@@ -22,4 +22,4 @@ az storage share create -n $AKDC_SHARE_NAME --connection-string $AKDC_STORAGE_CO
 # Get storage account key
 export AKDC_STORAGE_KEY=$(az storage account keys list --resource-group $AKDC_RG --account-name $AKDC_STORAGE_NAME --query "[0].value" -o tsv)
 
-flt create --ssl cseretail.com --branch factory-fleet -l northcentralus -g factory-fleet --sku Standard_NC6 --verbose -c central-tx-atx-f01
+flt create --gitops --ssl cseretail.com --branch factory-fleet -l northcentralus -g factory-fleet --cores 16 --verbose -c central-tx-dfw-f01
