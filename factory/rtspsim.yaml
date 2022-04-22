@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rtspsim
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: rtspsim
+  minReadySeconds: 10
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+  template:
+    metadata:
+      labels:
+        app: rtspsim
+    spec:
+      nodeSelector:
+        "beta.kubernetes.io/os": linux
+      containers:
+      - name: rtspsim
+        image: intelligentedge/rtspsimmodule:0.27.0-amd64
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 554
+        volumeMounts:
+        - name: azure
+          mountPath: /live/mediaServer/media/upload
+      volumes:
+      - name: azure
+        azureFile:
+          secretName: azure-secret
+          shareName: uploadvolume
+          readOnly: false
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: rtspsim
+spec:
+  ports:
+  - port: 554
+  selector:
+    app: rtspsim
