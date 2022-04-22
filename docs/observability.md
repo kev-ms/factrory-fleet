@@ -147,6 +147,30 @@ Copy the content in dashboard.json and import as a new dashboard in Grafana Clou
   * Name the rule $FLT_NAME App Issue
   * Rule type: Grafana managed alert
   * Folder: Platform
-* Select grafanacloud.retailedge.prom as the source
+  * Group: $FLT_NAME - App Issue
 
-TODO: Insert screen shot for Alert Config
+* Under "Create a query to be alerted on":
+  * For Query A:
+    * Select grafanacloud.retailedge.prom as the source from the drop down list.
+    * Replace {your $FLT_NAME} with your fleet name and copy the query below to the query field.
+  * For Query B:
+    * Set Operation to Reduce
+    * Set Function to Last
+    * Set Input to A
+    * Leave Mode as Strict
+  * Add another Expression (+ Expression)
+    * Name the Expression "More than 5% errors"
+    * Set Operation to Math
+    * Type in the Expression: $B > 5
+* Under "Define alert conditions"
+  * Set Condition to "More than 5% errors"
+  * Set evaluate every to 30s
+  * Set for to 1m
+
+Alert Query:
+
+```sql
+
+sum(rate(WebVDuration_count{status!="OK",server!="",origin_prometheus="corp-monitoring-{your $FLT_NAME}"}[10s])) by (server,job) / sum(rate(WebVDuration_count{server!="",origin_prometheus="corp-monitoring-{your $FLT_NAME}"}[10s])) by (server,job) * 100
+
+```
