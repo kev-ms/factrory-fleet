@@ -1,7 +1,9 @@
 {
-    "imageName": "grafana/fluent-bit-plugin-loki",
-    "imageTag": "latest",
+    "imageName": "fluent/fluent-bit",
+    "imageTag": "1.9.0",
     "jobSuffix": "pilot",
+    "lokiURL": "logs-prod-us-central1.grafana.net",
+    "lokiUser": "129904",
     "name": "fluent-bit",
     "namespace": "fluent-bit",
     "targetDir": "apps",
