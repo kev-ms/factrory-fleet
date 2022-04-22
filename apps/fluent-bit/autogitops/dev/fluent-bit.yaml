@@ -71,6 +71,30 @@ data:
         Labels            job=webv-{{gitops.jobSuffix}}
         label_keys        $StatusCode,$Server
         remove_keys       $StatusCode,$Server
+    [OUTPUT]
+        Name              loki
+        Match             kube.var.log.containers.ai-order-accuracy*.*
+        Host              {{gitops.lokiURL}}
+        Port              443
+        tls               on
+        tls.verify        on
+        http_user         {{gitops.lokiUser}}
+        http_passwd       ${LOKI_PASSWORD}
+        Labels            job=aioa-{{gitops.jobSuffix}}
+        label_keys        $StatusCode,$Category,$CosmosName,$stream
+        remove_keys       $StatusCode,$Category,$CosmosName,$stream
+    [OUTPUT]
+        Name              loki
+        Match             kube.var.log.containers.imdb*.*
+        Host              {{gitops.lokiURL}}
+        Port              443
+        tls               on
+        tls.verify        on
+        http_user         {{gitops.lokiUser}}
+        http_passwd       ${LOKI_PASSWORD}
+        Labels            job=imdb-{{gitops.jobSuffix}}
+        label_keys        $StatusCode,$Category,$CosmosName,$stream
+        remove_keys       $StatusCode,$Category,$CosmosName,$stream
   input-kubernetes.conf: |
     [INPUT]
         Name              tail
