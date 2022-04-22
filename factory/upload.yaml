@@ -32,7 +32,7 @@ spec:
       volumes:
       - name: upload
         persistentVolumeClaim:
-          upload-pvc
+          claimName: upload-pvc
 
 
 ---
