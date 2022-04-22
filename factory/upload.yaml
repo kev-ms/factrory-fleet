@@ -26,15 +26,15 @@ spec:
         imagePullPolicy: Always
         ports:
         - containerPort: 7000
-        volumeMounts:
-        - name: azure
-          mountPath: /app/upload
-      volumes:
-      - name: azure
-        azureFile:
-          secretName: azure-secret
-          shareName: uploadvolume
-          readOnly: false
+      #   volumeMounts:
+      #   - name: azure
+      #     mountPath: /app/upload
+      # volumes:
+      # - name: azure
+      #   azureFile:
+      #     secretName: azure-secret
+      #     shareName: uploadvolume
+      #     readOnly: false
 
 ---
 apiVersion: v1
