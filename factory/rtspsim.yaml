@@ -26,15 +26,13 @@ spec:
         imagePullPolicy: Always
         ports:
         - containerPort: 554
-      #   volumeMounts:
-      #   - name: azure
-      #     mountPath: /live/mediaServer/media/upload
-      # volumes:
-      # - name: azure
-      #   azureFile:
-      #     secretName: azure-secret
-      #     shareName: uploadvolume
-      #     readOnly: false
+        volumeMounts:
+        - name: upload
+          mountPath: /app/upload
+      volumes:
+      - name: upload
+        persistentVolumeClaim:
+          upload-pvc
 
 ---
 apiVersion: v1
