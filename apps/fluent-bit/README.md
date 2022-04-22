@@ -52,8 +52,8 @@ These values are located in the Grafana Cloud Portal.
 * Go to the `Grafana Cloud Portal`: <https://grafana.com/orgs/yourUserName>
 * Click `Details` in the `Loki` section
 * Under Grafana Data Source Settings:
-  * Set lokiUrl to the `URL` value
-  * Set lokiUser to the `User` value should be used for lokiUser
+  * Set lokiURL to the `URL` value
+  * Set lokiUser to the `User` value
 
 ## Fluent Bit Configuration
 

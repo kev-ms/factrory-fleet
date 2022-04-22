@@ -58,8 +58,6 @@ data:
       evaluation_interval: 5s
       external_labels:
         origin_prometheus: {{gitops.config.store}}
-    rule_files:
-      - /etc/prometheus/prometheus.rules
     remote_write:
     - url: {{gitops.prometheusURL}}
       basic_auth:
