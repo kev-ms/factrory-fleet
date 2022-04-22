@@ -15,7 +15,7 @@
 
 ```bash
 
-GC_PAT="<Paste your Grafana Cloud PAT here>"
+GC_PAT="<Paste your API Key value here>"
 
 ```
 
