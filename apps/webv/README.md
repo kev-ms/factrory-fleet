@@ -2,7 +2,7 @@
 
 ## Update yaml file with appropriate server names
 
-Before deploying webv to your fleet, you need to update the server arguments with names specific to your fleet.
+Before deploying WebV to your fleet, you need to update the server arguments with names specific to your fleet.
 
 ```yaml
 

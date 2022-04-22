@@ -2,7 +2,7 @@
 
 ## Grafana Cloud Configuration
 
-The prometheus deployment expects to retrieve the value for the Grafana Cloud API Key from a kubernetes secret. To acheive this, we store the value as a secret in Key Vault. Each member of the fleet retrieves the value from Key Vault during setup and creates the needed secret on the cluster.
+The Prometheus deployment expects to retrieve the value for the Grafana Cloud API Key from a kubernetes secret. To acheive this, we store the value as a secret in Key Vault. Each member of the fleet retrieves the value from Key Vault during setup and creates the needed secret on the cluster.
 
 ### Prometheus secret (password)
 
@@ -35,7 +35,7 @@ az keyvault secret set --vault-name kv-tld --name prometheus-secret --value $GC_
 
 ### Update Prometheus Config
 
-Before deploying prometheus to your corp monitoring cluster, you need to update the values in /apps/prometheus/autogitops/config.json to match your Grafana Cloud instance.
+Before deploying Prometheus to your corp monitoring cluster, you need to update the values in /apps/prometheus/autogitops/config.json to match your Grafana Cloud instance.
 
 The following values need to be set:
 
@@ -54,7 +54,7 @@ These values are located in the Grafana Cloud Portal.
 
 ## Prometheus Configuration
 
-The "origin_prometheus" value in the prometheus configuration is important as it serves as a way to uniquely identify the source of the metrics when querying in Grafana Cloud. By default, this will be set to the name of the store that prometheus is deployed to.
+The "origin_prometheus" value in the Prometheus configuration is important as it serves as a way to uniquely identify the source of the metrics when querying in Grafana Cloud. By default, this will be set to the name of the store that Prometheus is deployed to.
 
 ```yaml
 
