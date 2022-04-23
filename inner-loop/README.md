@@ -2,6 +2,21 @@
 
 ## Setup Edge Vision in Codespaces
 
+> Create a Codespace with 16 cores to ensure enough capacity
+
+- Checkout branches
+
+  ```bash
+
+  git checkout factory-fleet
+  git pull
+
+  # checkout CLI branch
+  git -C ../cli checkout factory-fleet
+  git -C ../cli pull
+
+  ```
+
 - Start in the inner-loop directory
 
   ```bash
@@ -11,10 +26,21 @@
   ```
 
 - Add Azure Extension
+  - Run this once for each new Codespace you create
 
   ```bash
 
   az extension add -n azure-iot
+
+  ```
+
+- Install CIFS / SMB driver
+
+  ```bash
+  - Run this once for each new Codespace you create
+
+  sudo apt update
+  sudo apt install cifs-utils
 
   ```
 
@@ -60,14 +86,41 @@
 
   ```
 
+- Create SMB Credentials File
+
+```bash
+
+credentialRoot="/etc/smbcredentials"
+sudo mkdir -p "$credentialRoot"
+
+# Create the credential file for this individual storage account
+smbCredentialFile="$credentialRoot/$AKDC_STORAGE_NAME.cred"
+
+# save the credentials
+echo "username=$AKDC_STORAGE_NAME" | sudo tee $smbCredentialFile
+echo "password=$AKDC_STORAGE_KEY" | sudo tee -a $smbCredentialFile
+
+# check the file
+cat $smbCredentialFile
+
+```
+
 - Mount the Azure Files share
 
   ```bash
 
-  sudo mkdir -p /upload
-  sudo mount -v -t cifs //$AKDC_STORAGE_NAME.file.core.windows.net/$AKDC_VOLUME /upload \
-  -o username=$AKDC_STORAGE_NAME,password=$AKDC_STORAGE_KEY,dir_mode=0777,file_mode=0777,cache=strict,actimeo=30
+  httpEndpoint=$(az storage account show \
+    --resource-group $AKDC_RESOURCE_GROUP \
+    --name $AKDC_STORAGE_NAME \
+    --query "primaryEndpoints.file" --output tsv | tr -d '"')
+  smbPath=$(echo $httpEndpoint | cut -c7-$(expr length $httpEndpoint))$AKDC_VOLUME
+  echo $smbPath
 
+  sudo mkdir -p /upload
+  echo "$smbPath /upload cifs nofail,credentials=$smbCredentialFile,serverino" | sudo tee -a /etc/fstab
+
+  sudo mount -a
+  
   # check the mount
   cat /upload/status
 
