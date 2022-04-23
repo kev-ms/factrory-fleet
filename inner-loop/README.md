@@ -88,22 +88,22 @@
 
 - Create SMB Credentials File
 
-```bash
+  ```bash
 
-credentialRoot="/etc/smbcredentials"
-sudo mkdir -p "$credentialRoot"
+  credentialRoot="/etc/smbcredentials"
+  sudo mkdir -p "$credentialRoot"
 
-# Create the credential file for this individual storage account
-smbCredentialFile="$credentialRoot/$AKDC_STORAGE_NAME.cred"
+  # Create the credential file for this individual storage account
+  smbCredentialFile="$credentialRoot/$AKDC_STORAGE_NAME.cred"
 
-# save the credentials
-echo "username=$AKDC_STORAGE_NAME" | sudo tee $smbCredentialFile
-echo "password=$AKDC_STORAGE_KEY" | sudo tee -a $smbCredentialFile
+  # save the credentials
+  echo "username=$AKDC_STORAGE_NAME" | sudo tee $smbCredentialFile
+  echo "password=$AKDC_STORAGE_KEY" | sudo tee -a $smbCredentialFile
 
-# check the file
-cat $smbCredentialFile
+  # check the file
+  cat $smbCredentialFile
 
-```
+  ```
 
 - Mount the Azure Files share
 
@@ -114,13 +114,14 @@ cat $smbCredentialFile
     --name $AKDC_STORAGE_NAME \
     --query "primaryEndpoints.file" --output tsv | tr -d '"')
   smbPath=$(echo $httpEndpoint | cut -c7-$(expr length $httpEndpoint))$AKDC_VOLUME
-  echo $smbPath
-
+  
   sudo mkdir -p /upload
   echo "$smbPath /upload cifs nofail,credentials=$smbCredentialFile,serverino" | sudo tee -a /etc/fstab
 
+  echo "sudo mount -a" >> "$HOME/.zshrc"
+
   sudo mount -a
-  
+
   # check the mount
   cat /upload/status
 
