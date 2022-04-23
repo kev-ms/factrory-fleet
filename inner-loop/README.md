@@ -19,18 +19,32 @@
   ```
 
 - Set env vars
+  - Run this once for each new Codespace you create
 
   ```bash
 
+  # add these commands to ~/.zshrc
   export AKDC_RESOURCE_GROUP=factory-fleet
+  export AKDC_STORAGE_CONNECTION=$(az storage account show-connection-string -n $AKDC_STORAGE_NAME -g $AKDC_RESOURCE_GROUP -o tsv)
   export AKDC_STORAGE_NAME=factoryfleetstorage
   export AKDC_CLUSTER=central-tx-dfw-f01
   export AKDC_SUBSCRIPTION=$(az account show --query id -o tsv)
   export AKDC_VOLUME=uploadvolume
-
-  # Get storage account key
   export AKDC_STORAGE_KEY=$(az storage account keys list --resource-group $AKDC_RESOURCE_GROUP --account-name $AKDC_STORAGE_NAME --query "[0].value" -o tsv)
 
+  {
+    echo ""
+    echo "export AKDC_RESOURCE_GROUP=$AKDC_RESOURCE_GROUP"
+    echo "export AKDC_STORAGE_NAME=$AKDC_STORAGE_NAME"
+    echo "export AKDC_CLUSTER=$AKDC_CLUSTER"
+    echo "export AKDC_SUBSCRIPTION=$AKDC_SUBSCRIPTION"
+    echo "export AKDC_VOLUME=$AKDC_VOLUME"
+    echo "export AKDC_STORAGE_KEY=$AKDC_STORAGE_KEY"
+    echo "export AKDC_STORAGE_CONNECTION=$AKDC_STORAGE_CONNECTION"
+  } >> $HOME/.zshrc
+
+
+  # save the iot hub info
   echo "IOTHUB_CONNECTION_STRING=$(az iot hub connection-string show --hub-name $AKDC_RESOURCE_GROUP -o tsv)" > ~/.ssh/iot.env
   echo "IOTEDGE_DEVICE_CONNECTION_STRING=$(az iot hub device-identity connection-string show --hub-name $AKDC_RESOURCE_GROUP --device-id $AKDC_CLUSTER -o tsv)" >> ~/.ssh/iot.env
 
@@ -40,8 +54,8 @@
 
   ```bash
 
-  echo $AKDC_STORAGE_NAME
-  echo $AKDC_STORAGE_KEY
+  env | grep AKDC | sort
+
   cat ~/.ssh/iot.env
 
   ```
@@ -91,7 +105,7 @@
 
   ```bash
 
-  # it takes 1-2 minutes for all pods to start
+  # it takes ~2 minutes for all pods to start
   kubectl get pods
 
   ```
