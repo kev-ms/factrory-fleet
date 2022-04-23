@@ -31,9 +31,10 @@ spec:
           mountPath: /app/upload
       volumes:
       - name: upload
-        persistentVolumeClaim:
-          claimName: upload-pvc
-
+        azureFile:
+          secretName: azure-secret
+          shareName: uploadvolume
+          readOnly: false
 
 ---
 apiVersion: v1
