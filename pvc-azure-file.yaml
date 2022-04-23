@@ -23,10 +23,23 @@ spec:
     readOnly: false
     # make sure this volumeid is unique in the cluster
     # `#` is not allowed in self defined volumeHandle
-    volumeHandle: unique-volumeid
+    volumeHandle: upload-volumeid
     volumeAttributes:
-      resourceGroup: factory-fleet
       shareName: uploadvolume
     nodeStageSecretRef:
       name: azure-secret
       namespace: default
+
+---
+
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pvc-azurefile
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 10Gi
+  storageClassName: azurefile-csi

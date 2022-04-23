@@ -2,7 +2,7 @@
 kind: Pod
 apiVersion: v1
 metadata:
-  name: nginx-azurefile-inline-volume
+  name: nginx-azurefile
 spec:
   nodeSelector:
     "kubernetes.io/os": linux
@@ -18,9 +18,5 @@ spec:
           mountPath: "/mnt/azurefile"
   volumes:
     - name: persistent-storage
-      csi:
-        driver: file.csi.azure.com
-        volumeAttributes:
-          shareName: uploadvolume
-          secretName: azure-secret
-          mountOptions: "dir_mode=0777,file_mode=0777,cache=strict,actimeo=30"
+      persistentVolumeClaim:
+        claimName: pvc-azurefile
