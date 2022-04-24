@@ -53,6 +53,17 @@ sudo mv mount /etc/init.d/mount
 sudo chmod +x /etc/init.d/mount
 sudo update-rc.d mount defaults
 
-## todo - fix init.d - mount gets linked but doesn't run during boot
-##        temporarily add the mount-a to sudo (which runs)
-sudo sed -i "s/set -e/mount -a\n\nset -e/" /etc/init.d/sudo
+{
+      echo ""
+      echo "export AKDC_RESOURCE_GROUP=$AKDC_RESOURCE_GROUP"
+      echo "export AKDC_STORAGE_NAME=$AKDC_STORAGE_NAME"
+      echo "export AKDC_CLUSTER=$AKDC_CLUSTER"
+      echo "export AKDC_SUBSCRIPTION=$(az account show --query id -o tsv)"
+      echo "export AKDC_VOLUME=$AKDC_VOLUME"
+      echo "export AKDC_STORAGE_KEY=$(az storage account keys list --resource-group $AKDC_RESOURCE_GROUP --account-name $AKDC_STORAGE_NAME --query "[0].value" -o tsv)"
+      echo "export AKDC_STORAGE_CONNECTION=$(az storage account show-connection-string -n $AKDC_STORAGE_NAME -g $AKDC_RESOURCE_GROUP -o tsv)"
+} >> "$HOME/.zshrc"
+
+# save the iot hub info
+echo "IOTHUB_CONNECTION_STRING=$(az iot hub connection-string show --hub-name "$AKDC_RESOURCE_GROUP" -o tsv)" > ~/.ssh/iot.env
+echo "IOTEDGE_DEVICE_CONNECTION_STRING=$(az iot hub device-identity connection-string show --hub-name "$AKDC_RESOURCE_GROUP" --device-id "$AKDC_CLUSTER" -o tsv)" >> ~/.ssh/iot.env
