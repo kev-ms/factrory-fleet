@@ -27,18 +27,9 @@
 
   ```
 
-- Set env vars
-
-  ```bash
-
-  export AKDC_RESOURCE_GROUP=factory-fleet
-  export AKDC_STORAGE_NAME=factoryfleetstorage
-  export AKDC_CLUSTER=central-tx-dfw-f01
-  export AKDC_VOLUME=uploadvolume
-
-  ```
-
 - Run the setup script
+
+> setup.sh will eventually be integrated into the Codespace
 
   ```bash
 
@@ -48,51 +39,13 @@
 
 - Start a new shell
 
+> You can also exit and press ctl ` to create a new shell
+
   ```bash
 
   zsh
 
   ```
-
-- Check the values
-
-  ```bash
-
-  env | grep AKDC | sort
-
-  cat ~/.ssh/iot.env
-
-  ```
-
-- Check the k3d mount
-
-  ```bash
-
-  mount | grep k3d
-
-  ```
-
-- Create the Azure credentials file for the nodes
-
-```bash
-
-cat << EOF > /k3d/etc/kubernetes/azure.json
-{
-    "cloud":"AzurePublicCloud",
-    "tenantId": "$AKDC_TENANT",
-    "aadClientId": "$AKDC_SP_ID",
-    "aadClientSecret": "$AKDC_SP_KEY",
-    "subscriptionId": "$AKDC_SUBSCRIPTION",
-    "resourceGroup": "$AKDC_RESOURCE_GROUP",
-    "location": "centralus",
-    "cloudProviderBackoff": false,
-    "useManagedIdentityExtension": false,
-    "useInstanceMetadata": true
-}
-
-EOF
-
-```
 
 - Create a new k3d cluster
 
