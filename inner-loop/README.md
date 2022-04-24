@@ -1,8 +1,8 @@
 # Edge Vision Setup
 
-> You have to set the AKDC_SP_NAME and AKDC_SP_KEY Codespaces secrets before creating the Codespace
->
-> Create a Codespace with 16 cores to ensure enough capacity
+- You must set the AKDC_SP_NAME and AKDC_SP_KEY Codespaces secrets before creating the Codespace
+- You must create the Codespace from this branch
+- Create a Codespace with 16 cores to ensure enough capacity
 
 ## Setup Edge Vision in Codespaces
 
@@ -32,15 +32,6 @@
   ```bash
 
   flt az-login
-
-  ```
-
-- Add Azure Extension
-  - Run this once for each new Codespace you create
-
-  ```bash
-
-  az extension add -n azure-iot
 
   ```
 
@@ -86,67 +77,13 @@
 
   ```
 
-- Create the k3d directories and shared mount
+- Check the k3d mount
 
   ```bash
 
-  sudo mkdir -p /k3d/var/lib/kubelet
-  sudo mkdir -p /k3d/etc/kubernetes
-  sudo chown -R $USER:$USER /k3d
-
-  echo "/k3d/var/lib/kubelet /k3d/var/lib/kubelet none bind,shared" | sudo tee -a /etc/fstab
-  sudo mount -a
-
-  # check mount
   mount | grep k3d
 
   ```
-
-- Update init.d to mount on boot
-
-```bash
-
-cat << EOF > mount
-#! /bin/sh
-
-### BEGIN INIT INFO
-# Provides:          mount
-# Required-Start:    \$local_fs \$remote_fs
-# Required-Stop:
-# Default-Start:     2 3 4 5
-# Default-Stop:
-# Short-Description: Mount fstab
-### END INIT INFO
-
-case "\$1" in
-  start|reload|restart|force-reload)
-        sudo mount -a
-        ;;
-  stop)
-        echo "stop not implemented"
-        ;;
-  status)
-        sudo mount | grep k3d
-        ;;
-  *)
-        echo "Usage: \$N {start|stop|restart|force-reload|status}" >&2
-        exit 1
-        ;;
-esac
-
-exit 0
-
-EOF
-
-sudo mv mount /etc/init.d/mount
-sudo chmod +x /etc/init.d/mount
-sudo update-rc.d mount defaults
-
-## todo - fix init.d - mount gets linked but doesn't run during boot
-##        temporarily add the mount-a to ssh (which runs)
-sudo sed -i "s/set -e/mount -a\n\nset -e/" /etc/init.d/ssh
-
-```
 
 - Create the Azure credentials file for the nodes
 
