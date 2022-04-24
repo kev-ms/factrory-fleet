@@ -90,23 +90,23 @@
 
 - Create the Azure credentials file for the nodes
 
-  ```bash
+```bash
 
-  cat << EOF > /k3d/etc/kubernetes/azure.json
-  {
-      "cloud":"AzurePublicCloud",
-      "tenantId": "12d1a0e5-9d0a-4b24-9810-5d718de78502",
-      "aadClientId": "AKDC_SP_ID=7de948ba-3635-4a09-baf5-dfadb9eab281",
-      "aadClientSecret": "f1skIVLfRYoBquSs-HMsd_NzJ82ikq0HQg",
-      "subscriptionId": "9b3afdd0-1f5f-4b45-ac30-02f377b9db92",
-      "resourceGroup": "factory-fleet",
-      "location": "centralus",
-      "cloudProviderBackoff": false,
-      "useManagedIdentityExtension": false,
-      "useInstanceMetadata": true
-  }
+cat << EOF > /k3d/etc/kubernetes/azure.json
+{
+    "cloud":"AzurePublicCloud",
+    "tenantId": "$AKDC_TENANT",
+    "aadClientId": "$AKDC_SP_ID",
+    "aadClientSecret": "$AKDC_SP_KEY",
+    "subscriptionId": "$AKDC_SUBSCRIPTION",
+    "resourceGroup": "$AKDC_RESOURCE_GROUP",
+    "location": "centralus",
+    "cloudProviderBackoff": false,
+    "useManagedIdentityExtension": false,
+    "useInstanceMetadata": true
+}
 
-  EOF
+EOF
 
 
   ```
