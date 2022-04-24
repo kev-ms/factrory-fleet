@@ -41,11 +41,11 @@
 
   # add these commands to ~/.zshrc
   export AKDC_RESOURCE_GROUP=factory-fleet
-  export AKDC_STORAGE_CONNECTION=$(az storage account show-connection-string -n $AKDC_STORAGE_NAME -g $AKDC_RESOURCE_GROUP -o tsv)
   export AKDC_STORAGE_NAME=factoryfleetstorage
   export AKDC_CLUSTER=central-tx-dfw-f01
-  export AKDC_SUBSCRIPTION=$(az account show --query id -o tsv)
   export AKDC_VOLUME=uploadvolume
+  export AKDC_STORAGE_CONNECTION=$(az storage account show-connection-string -n $AKDC_STORAGE_NAME -g $AKDC_RESOURCE_GROUP -o tsv)
+  export AKDC_SUBSCRIPTION=$(az account show --query id -o tsv)
   export AKDC_STORAGE_KEY=$(az storage account keys list --resource-group $AKDC_RESOURCE_GROUP --account-name $AKDC_STORAGE_NAME --query "[0].value" -o tsv)
 
   {
