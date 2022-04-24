@@ -1,8 +1,8 @@
 # Edge Vision Setup
 
-## Setup Edge Vision in Codespaces
-
 > Create a Codespace with 16 cores to ensure enough capacity
+
+## Setup Edge Vision in Codespaces
 
 - Checkout branches
 
