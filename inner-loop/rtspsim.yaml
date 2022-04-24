@@ -31,8 +31,8 @@ spec:
           mountPath: /app/upload
       volumes:
       - name: upload
-        hostPath:
-          path: /upload
+        persistentVolumeClaim:
+          claimName: pvc-upload
 
 ---
 apiVersion: v1

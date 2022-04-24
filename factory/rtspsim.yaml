@@ -32,9 +32,8 @@ spec:
       volumes:
       - name: upload
         azureFile:
-          secretName: azure-secret
-          shareName: uploadvolume
-          readOnly: false
+        persistentVolumeClaim:
+          claimName: pvc-upload
 
 ---
 apiVersion: v1
