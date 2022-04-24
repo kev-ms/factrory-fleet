@@ -5,6 +5,8 @@
 echo "post-start start"
 echo "$(date +'%Y-%m-%d %H:%M:%S')    post-start start" >> "$HOME/status"
 
+mount -a
+
 # update the cli
 git -C ../cli pull
 
