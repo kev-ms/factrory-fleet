@@ -13,7 +13,11 @@ sudo mkdir -p /k3d/var/lib/kubelet
 sudo mkdir -p /k3d/etc/kubernetes
 sudo chown -R "$USER":"$USER" /k3d
 
-echo "/k3d/var/lib/kubelet /k3d/var/lib/kubelet none bind,shared" | sudo tee -a /etc/fstab
+if [ "$(grep k3d /etc/fstab)" = "" ]
+then
+      echo "/k3d/var/lib/kubelet /k3d/var/lib/kubelet none bind,shared" | sudo tee -a /etc/fstab
+fi
+
 sudo mount -a
 
 # create init.d script
@@ -53,16 +57,19 @@ sudo mv mount /etc/init.d/mount
 sudo chmod +x /etc/init.d/mount
 sudo update-rc.d mount defaults
 
-{
-      echo ""
-      echo "export AKDC_RESOURCE_GROUP=$AKDC_RESOURCE_GROUP"
-      echo "export AKDC_STORAGE_NAME=$AKDC_STORAGE_NAME"
-      echo "export AKDC_CLUSTER=$AKDC_CLUSTER"
-      echo "export AKDC_SUBSCRIPTION=$(az account show --query id -o tsv)"
-      echo "export AKDC_VOLUME=$AKDC_VOLUME"
-      echo "export AKDC_STORAGE_KEY=$(az storage account keys list --resource-group $AKDC_RESOURCE_GROUP --account-name $AKDC_STORAGE_NAME --query "[0].value" -o tsv)"
-      echo "export AKDC_STORAGE_CONNECTION=$(az storage account show-connection-string -n $AKDC_STORAGE_NAME -g $AKDC_RESOURCE_GROUP -o tsv)"
-} >> "$HOME/.zshrc"
+if [ "$(grep AKDC_STORAGE_KEY ~/.zshrc)" = "" ]
+then
+      {
+            echo ""
+            echo "export AKDC_RESOURCE_GROUP=$AKDC_RESOURCE_GROUP"
+            echo "export AKDC_STORAGE_NAME=$AKDC_STORAGE_NAME"
+            echo "export AKDC_CLUSTER=$AKDC_CLUSTER"
+            echo "export AKDC_SUBSCRIPTION=$(az account show --query id -o tsv)"
+            echo "export AKDC_VOLUME=$AKDC_VOLUME"
+            echo "export AKDC_STORAGE_KEY=$(az storage account keys list --resource-group "$AKDC_RESOURCE_GROUP" --account-name "$AKDC_STORAGE_NAME" --query "[0].value" -o tsv)"
+            echo "export AKDC_STORAGE_CONNECTION=$(az storage account show-connection-string -n "$AKDC_STORAGE_NAME" -g "$AKDC_RESOURCE_GROUP" -o tsv)"
+      } >> "$HOME/.zshrc"
+fi
 
 # save the iot hub info
 echo "IOTHUB_CONNECTION_STRING=$(az iot hub connection-string show --hub-name "$AKDC_RESOURCE_GROUP" -o tsv)" > ~/.ssh/iot.env

@@ -42,7 +42,7 @@
 
   ```bash
 
-  .devcontainer/setup.sh
+  ../.devcontainer/setup.sh
 
   ```
 
