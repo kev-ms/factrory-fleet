@@ -83,6 +83,8 @@
   sudo mkdir -p /k3d/var/lib/kubelet
   sudo mkdir -p /k3d/etc/kubernetes
   sudo chown -R $USER:$USER /k3d
+
+  # todo - move to fstabs - currently you have to run every time you reboot
   sudo mount -o bind /k3d/var/lib/kubelet /k3d/var/lib/kubelet
   sudo mount --make-shared /k3d/var/lib/kubelet
 
