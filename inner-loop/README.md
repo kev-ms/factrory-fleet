@@ -1,5 +1,7 @@
 # Edge Vision Setup
 
+> You have to set the AKDC_SP_NAME and AKDC_SP_KEY Codespaces secrets before creating the Codespace
+>
 > Create a Codespace with 16 cores to ensure enough capacity
 
 ## Setup Edge Vision in Codespaces
@@ -22,6 +24,14 @@
   ```bash
 
   cd "$REPO_BASE/inner-loop"
+
+  ```
+
+- Login to Azure
+
+  ```bash
+
+  flt az-login
 
   ```
 
