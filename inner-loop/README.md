@@ -34,16 +34,6 @@
 
   ```
 
-- Install CIFS / SMB driver
-
-  ```bash
-  - Run this once for each new Codespace you create
-
-  sudo apt update
-  sudo apt install cifs-utils
-
-  ```
-
 - Set env vars
   - Run this once for each new Codespace you create
 
@@ -86,48 +76,42 @@
 
   ```
 
-- Create SMB Credentials File
+- Create the k3d directories and shared mount
 
   ```bash
 
-  credentialRoot="/etc/smbcredentials"
-  sudo mkdir -p "$credentialRoot"
-
-  # Create the credential file for this individual storage account
-  smbCredentialFile="$credentialRoot/$AKDC_STORAGE_NAME.cred"
-
-  # save the credentials
-  echo "username=$AKDC_STORAGE_NAME" | sudo tee $smbCredentialFile
-  echo "password=$AKDC_STORAGE_KEY" | sudo tee -a $smbCredentialFile
-
-  # check the file
-  cat $smbCredentialFile
+  sudo mkdir -p /k3d/var/lib/kubelet
+  sudo mkdir -p /k3d/etc/kubernetes
+  sudo chown -R $USER:$USER /k3d
+  sudo mount -o bind /k3d/var/lib/kubelet /k3d/var/lib/kubelet
+  sudo mount --make-shared /k3d/var/lib/kubelet
 
   ```
 
-- Mount the Azure Files share
+- Create the Azure credentials file for the nodes
 
   ```bash
 
-  httpEndpoint=$(az storage account show \
-    --resource-group $AKDC_RESOURCE_GROUP \
-    --name $AKDC_STORAGE_NAME \
-    --query "primaryEndpoints.file" --output tsv | tr -d '"')
-  smbPath=$(echo $httpEndpoint | cut -c7-$(expr length $httpEndpoint))$AKDC_VOLUME
-  
-  sudo mkdir -p /upload
-  echo "$smbPath /upload cifs nofail,credentials=$smbCredentialFile,serverino" | sudo tee -a /etc/fstab
+  cat << EOF > /k3d/etc/kubernetes/azure.json
+  {
+      "cloud":"AzurePublicCloud",
+      "tenantId": "12d1a0e5-9d0a-4b24-9810-5d718de78502",
+      "aadClientId": "AKDC_SP_ID=7de948ba-3635-4a09-baf5-dfadb9eab281",
+      "aadClientSecret": "f1skIVLfRYoBquSs-HMsd_NzJ82ikq0HQg",
+      "subscriptionId": "9b3afdd0-1f5f-4b45-ac30-02f377b9db92",
+      "resourceGroup": "factory-fleet",
+      "location": "centralus",
+      "cloudProviderBackoff": false,
+      "useManagedIdentityExtension": false,
+      "useInstanceMetadata": true
+  }
 
-  echo "sudo mount -a" >> "$HOME/.zshrc"
+  EOF
 
-  sudo mount -a
-
-  # check the mount
-  cat /upload/status
 
   ```
 
-  - Create a new k3d cluster
+- Create a new k3d cluster
 
     ```bash
 
