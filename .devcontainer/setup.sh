@@ -5,6 +5,9 @@
 # add the iot extension
 az extension add -n azure-iot
 
+# login to Azure
+flt az-login
+
 # create shared directories / mounts
 sudo mkdir -p /k3d/var/lib/kubelet
 sudo mkdir -p /k3d/etc/kubernetes
