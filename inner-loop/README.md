@@ -85,10 +85,60 @@
   sudo chown -R $USER:$USER /k3d
 
   echo "/k3d/var/lib/kubelet /k3d/var/lib/kubelet none bind,shared" | sudo tee -a /etc/fstab
-  echo "sudo mount -a" >> $HOME/.zshrc
   sudo mount -a
 
+  # check mount
+  mount | grep k3d
+
   ```
+
+- Update init.d to mount on boot
+
+```bash
+
+cat << EOF > mount
+#! /bin/sh
+
+### BEGIN INIT INFO
+# Provides:          mount
+# Required-Start:    \$local_fs \$remote_fs
+# Required-Stop:
+# Default-Start:     2 3 4 5
+# Default-Stop:
+# Short-Description: Mount fstab
+### END INIT INFO
+
+echo "\$1 \$(date)" >> /home/vscode/mount.log
+
+case "\$1" in
+  start|reload|restart|force-reload)
+        mount -a
+        ;;
+  stop)
+        echo "stop not implemented"
+        ;;
+  status)
+        echo "status /etc/init.d/mount"
+        ;;
+  *)
+        echo "Usage: \$N {start|stop|restart|force-reload|status}" >&2
+        exit 1
+        ;;
+esac
+
+exit 0
+
+EOF
+
+
+sudo mv mount /etc/init.d/mount
+sudo chmod +x /etc/init.d/mount
+sudo update-rc.d mount defaults
+
+## todo - fix init.d
+sudo sed -i "s/set -e/mount -a\n\nset -e/" /etc/init.d/ssh
+
+```
 
 - Create the Azure credentials file for the nodes
 
