@@ -25,9 +25,5 @@ docker pull ghcr.io/cse-labs/webv-red:latest
 docker pull ghcr.io/cse-labs/webv-red:beta
 docker pull ghcr.io/retaildevcrews/autogitops:beta
 
-# todo - move to fstab
-sudo mount -o bind /k3d/var/lib/kubelet /k3d/var/lib/kubelet
-sudo mount --make-shared /k3d/var/lib/kubelet
-
 echo "post-start complete"
 echo "$(date +'%Y-%m-%d %H:%M:%S')    post-start complete" >> "$HOME/status"

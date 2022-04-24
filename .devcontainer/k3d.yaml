@@ -12,9 +12,6 @@ volumes:
   - volume: /grafana:/grafana
     nodeFilters:
       - server[0]
-  - volume: /upload:/upload
-    nodeFilters:
-      - server[0]
 ports:
   - port: 30000:30000
     nodeFilters:

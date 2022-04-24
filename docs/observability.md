@@ -27,16 +27,38 @@ The Key Vault secret values are retrieved (via MI) during fleet creation and sto
 
 ## Deploy a central monitoring cluster to your fleet
 
-```bash
+- You need additional permissions to create a fleet
+  - Contact the Platform Core Team for access
+    - anflinch
+    - bartr
+    - devwag
+    - kevinshah
+    - wabrez
 
-Name your fleet
-export FLT_NAME=atx
+- Checkout your fleet branch
+- Name your fleet
 
-# must be named corp-monitoring-[your fleet name]
-# make sure you have checked out your fleet branch
-flt create --gitops --ssl cseretail.com -g $FLT_NAME-fleet -c corp-monitoring-$FLT_NAME
+  ```bash
 
-```
+  # must be unique
+  flt groups | grep fleet | sort
+
+  # 10 chars max
+  # lowercase alpha and - only
+  # must begin and end with alpha
+  #### bad names will fail later ###
+  export FLT_NAME=yourAliasOrProjectName
+
+  ```
+
+- Create corp-monitoring cluster
+
+  ```bash
+
+  # must be named corp-monitoring-[your fleet name]
+  flt create --gitops --ssl cseretail.com -g $FLT_NAME-fleet -c corp-monitoring-$FLT_NAME
+
+  ```
 
 ## WebV
 
@@ -78,7 +100,7 @@ Copy the [fluent-bit directory](https://github.com/retaildevcrews/edge-gitops/tr
 
 Follow the instructions [here](https://github.com/retaildevcrews/edge-gitops/tree/apps/apps/fluent-bit#update-fluent-bit-config) to configure the Fluent Bit deployment.
 
-### Update targets and deploy Fluent Bit to corp-montioring cluster
+### Update targets and deploy Fluent Bit to corp-monitoring cluster
 
 ```bash
 
@@ -108,7 +130,7 @@ Copy the [prometheus directory](https://github.com/retaildevcrews/edge-gitops/tr
 
 Follow the instructions [here](https://github.com/retaildevcrews/edge-gitops/tree/apps/apps/prometheus#update-prometheus-config) to configure the Prometheus deployment.
 
-### Update targets and deploy Prometheus to corp-montioring cluster
+### Update targets and deploy Prometheus to corp-monitoring cluster
 
 ```bash
 
