@@ -108,8 +108,7 @@ cat << EOF > /k3d/etc/kubernetes/azure.json
 
 EOF
 
-
-  ```
+```
 
 - Create a new k3d cluster
 
