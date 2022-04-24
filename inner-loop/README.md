@@ -108,17 +108,15 @@ cat << EOF > mount
 # Short-Description: Mount fstab
 ### END INIT INFO
 
-echo "\$1 \$(date)" >> /home/vscode/mount.log
-
 case "\$1" in
   start|reload|restart|force-reload)
-        mount -a
+        sudo mount -a
         ;;
   stop)
         echo "stop not implemented"
         ;;
   status)
-        echo "status /etc/init.d/mount"
+        sudo mount | grep k3d
         ;;
   *)
         echo "Usage: \$N {start|stop|restart|force-reload|status}" >&2
@@ -129,7 +127,6 @@ esac
 exit 0
 
 EOF
-
 
 sudo mv mount /etc/init.d/mount
 sudo chmod +x /etc/init.d/mount
