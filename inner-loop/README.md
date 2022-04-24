@@ -135,7 +135,8 @@ sudo mv mount /etc/init.d/mount
 sudo chmod +x /etc/init.d/mount
 sudo update-rc.d mount defaults
 
-## todo - fix init.d
+## todo - fix init.d - mount gets linked but doesn't run during boot
+##        temporarily add the mount-a to ssh (which runs)
 sudo sed -i "s/set -e/mount -a\n\nset -e/" /etc/init.d/ssh
 
 ```
