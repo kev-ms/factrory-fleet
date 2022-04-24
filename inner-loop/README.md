@@ -1,7 +1,6 @@
 # Edge Vision Setup
 
-- You must set the AKDC_SP_NAME and AKDC_SP_KEY Codespaces secrets before creating the Codespace
-- You must create the Codespace from this branch
+- You must create the Codespace from the akdc repo
 - Create a Codespace with 16 cores to ensure enough capacity
 
 ## Setup Edge Vision in Codespaces
@@ -13,9 +12,10 @@
   git checkout factory-fleet
   git pull
 
-  # checkout CLI branch
-  git -C ../cli checkout factory-fleet
-  git -C ../cli pull
+  # checkout edge-gitops branch
+  cd ../edge-gitops
+  git factory-fleet
+  git pull
 
   ```
 
@@ -23,47 +23,34 @@
 
   ```bash
 
-  cd "$REPO_BASE/inner-loop"
-
-  ```
-
-- Login to Azure
-
-  ```bash
-
-  flt az-login
+  cd /workspaces/edge-gitops/inner-loop
 
   ```
 
 - Set env vars
-  - Run this once for each new Codespace you create
 
   ```bash
 
-  # add these commands to ~/.zshrc
   export AKDC_RESOURCE_GROUP=factory-fleet
   export AKDC_STORAGE_NAME=factoryfleetstorage
   export AKDC_CLUSTER=central-tx-dfw-f01
   export AKDC_VOLUME=uploadvolume
-  export AKDC_STORAGE_CONNECTION=$(az storage account show-connection-string -n $AKDC_STORAGE_NAME -g $AKDC_RESOURCE_GROUP -o tsv)
-  export AKDC_SUBSCRIPTION=$(az account show --query id -o tsv)
-  export AKDC_STORAGE_KEY=$(az storage account keys list --resource-group $AKDC_RESOURCE_GROUP --account-name $AKDC_STORAGE_NAME --query "[0].value" -o tsv)
 
-  {
-    echo ""
-    echo "export AKDC_RESOURCE_GROUP=$AKDC_RESOURCE_GROUP"
-    echo "export AKDC_STORAGE_NAME=$AKDC_STORAGE_NAME"
-    echo "export AKDC_CLUSTER=$AKDC_CLUSTER"
-    echo "export AKDC_SUBSCRIPTION=$AKDC_SUBSCRIPTION"
-    echo "export AKDC_VOLUME=$AKDC_VOLUME"
-    echo "export AKDC_STORAGE_KEY=$AKDC_STORAGE_KEY"
-    echo "export AKDC_STORAGE_CONNECTION=$AKDC_STORAGE_CONNECTION"
-  } >> $HOME/.zshrc
+  ```
 
+- Run the setup script
 
-  # save the iot hub info
-  echo "IOTHUB_CONNECTION_STRING=$(az iot hub connection-string show --hub-name $AKDC_RESOURCE_GROUP -o tsv)" > ~/.ssh/iot.env
-  echo "IOTEDGE_DEVICE_CONNECTION_STRING=$(az iot hub device-identity connection-string show --hub-name $AKDC_RESOURCE_GROUP --device-id $AKDC_CLUSTER -o tsv)" >> ~/.ssh/iot.env
+  ```bash
+
+  .devcontainer/setup.sh
+
+  ```
+
+- Start a new shell
+
+  ```bash
+
+  zsh
 
   ```
 
