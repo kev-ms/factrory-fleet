@@ -57,10 +57,17 @@ sudo mv mount /etc/init.d/mount
 sudo chmod +x /etc/init.d/mount
 sudo update-rc.d mount defaults
 
+# set storage info
+export AKDC_RESOURCE_GROUP=factory-fleet
+export AKDC_STORAGE_NAME=factoryfleetstorage
+export AKDC_VOLUME=uploadvolume
+export AKDC_CLUSTER=central-tx-dfw-f01
+
 if [ "$(grep AKDC_STORAGE_KEY ~/.zshrc)" = "" ]
 then
       {
             echo ""
+            echo "export REPO_BASE=/workspaces/edge-gitops"
             echo "export AKDC_RESOURCE_GROUP=$AKDC_RESOURCE_GROUP"
             echo "export AKDC_STORAGE_NAME=$AKDC_STORAGE_NAME"
             echo "export AKDC_CLUSTER=$AKDC_CLUSTER"
@@ -74,3 +81,20 @@ fi
 # save the iot hub info
 echo "IOTHUB_CONNECTION_STRING=$(az iot hub connection-string show --hub-name "$AKDC_RESOURCE_GROUP" -o tsv)" > ~/.ssh/iot.env
 echo "IOTEDGE_DEVICE_CONNECTION_STRING=$(az iot hub device-identity connection-string show --hub-name "$AKDC_RESOURCE_GROUP" --device-id "$AKDC_CLUSTER" -o tsv)" >> ~/.ssh/iot.env
+
+# create the azure credentials file
+cat << EOF > /k3d/etc/kubernetes/azure.json
+{
+    "cloud":"AzurePublicCloud",
+    "tenantId": "$AKDC_TENANT",
+    "aadClientId": "$AKDC_SP_ID",
+    "aadClientSecret": "$AKDC_SP_KEY",
+    "subscriptionId": "$AKDC_SUBSCRIPTION",
+    "resourceGroup": "$AKDC_RESOURCE_GROUP",
+    "location": "centralus",
+    "cloudProviderBackoff": false,
+    "useManagedIdentityExtension": false,
+    "useInstanceMetadata": true
+}
+
+EOF
