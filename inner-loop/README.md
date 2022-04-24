@@ -130,11 +130,11 @@ EOF
 
   ```
 
-- Deploy the App
+- Install Azure Files CSI Driver
 
   ```bash
 
-  kubectl apply -f .
+  kubectl apply -f azurefile-csi
 
   ```
 
@@ -143,7 +143,32 @@ EOF
   ```bash
 
   # it takes ~2 minutes for all pods to start
-  kubectl get pods
+  kic pods
+
+  ```
+
+- Create Persistent Volume and Claim
+
+  ```bash
+
+  kubectl create -f pvc-azure-file.yaml
+
+  ```
+
+- Deploy the App
+
+  ```bash
+
+  kubectl apply -f app
+
+  ```
+
+- Check the pods
+
+  ```bash
+
+  # it takes ~2 minutes for all pods to start
+  kic pods
 
   ```
 
