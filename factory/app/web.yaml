@@ -53,8 +53,9 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: webmodule
+  name: webmodule-np
 spec:
+  type: ClusterIP
   ports:
   - port: 8000
   selector:

@@ -31,7 +31,6 @@ spec:
           mountPath: /app/upload
       volumes:
       - name: upload
-        azureFile:
         persistentVolumeClaim:
           claimName: pvc-upload
 
