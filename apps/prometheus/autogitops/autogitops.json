@@ -4,7 +4,5 @@
     "name": "prometheus",
     "namespace": "prometheus",
     "targetDir": "apps",
-    "targets": [
-        "store:kshahtest-central"
-    ]
+    "targets": null
 }
