@@ -8,7 +8,7 @@ export AKDC_LOCATION=centralus
 export AKDC_SHARE_NAME=uploadvolume
 export AKDC_STORAGE_NAME=factoryfleetstorage
 
-az group create -l $AKDC_LOCATION -g $AKDC_RG
+az group create -l $AKDC_LOCATION -g $AKDC_RG -o table
 
 # Create a storage account
 #az storage account create -n $AKDC_STORAGE_NAME -g $AKDC_RG -l $AKDC_LOCATION --sku Standard_LRS
