@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: cvcapturemodule
+  namespace: {{gitops.namespace}}
 spec:
   replicas: 1
   selector:
@@ -43,6 +44,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: cvcapturemodule
+  namespace: {{gitops.namespace}}
 spec:
   ports:
   - port: 9000
