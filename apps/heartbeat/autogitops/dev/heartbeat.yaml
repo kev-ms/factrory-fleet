@@ -50,19 +50,3 @@ spec:
       name: http
   selector:
     app: {{gitops.name}}
-
----
-
-apiVersion: networking.k8s.io/v1
-kind: Ingress
-metadata:
-  name: {{gitops.name}}
-  namespace: {{gitops.namespace}}
-spec:
-  rules:
-  - https:
-      paths:
-      - path: /heartbeat/
-        backend:
-          serviceName: {{gitops.name}}
-          servicePort: 8080
