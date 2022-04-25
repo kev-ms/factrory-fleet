@@ -9,9 +9,8 @@ spec:
   gateways:
     - istio-system/istio-gateway
   http:
-    - match:
-      route:
-        - destination:
-            host: webmodule
-            port:
-              number: 8000
+    - route:
+      - destination:
+          host: webmodule
+          port:
+            number: 8000
