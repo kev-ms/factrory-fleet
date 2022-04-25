@@ -1,0 +1,8 @@
+{
+	"environment": "dev",
+	"region": "west",
+	"zone": "west-nv",
+	"district": "west-nv-vegas",
+	"store": "west-nv-vegas-m01",
+	"domain": "west-nv-vegas-m01.cseretail.com"
+}
