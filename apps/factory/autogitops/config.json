@@ -2,5 +2,5 @@
     "name": "factory",
     "namespace": "default",
     "targetDir": "apps",
-    "targets": [ region:central ]
+    "targets": [ "region:central" ]
 }
