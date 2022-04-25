@@ -2,5 +2,7 @@
     "name": "factory",
     "namespace": "default",
     "targetDir": "apps",
-    "targets": [ ]
+    "targets": [
+        "region:central"
+    ]
 }
