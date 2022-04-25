@@ -1,11 +1,9 @@
 #!/bin/bash
 
-# duplicate this line for each cluster
-# flt delete yourClusterName
+# flt delete central-tx-atx-m01
+# flt delete east-ga-atl-m01
+# flt delete west-wa-sea-m01
 
 # rm ips
 
-# az group delete -y --no-wait -g yourResourceGroup
-
-echo "To delete your branch upstream, use"
-echo -e "\n\t git push origin --delete <your-fleet> \n"
+# az group delete -y --no-wait -g micro-fleet
