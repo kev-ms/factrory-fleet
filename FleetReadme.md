@@ -84,14 +84,6 @@
 
   ```
 
-- Create Persistent Volume and Claim
-
-  ```bash
-
-  kubectl create -f pvc-azure-file.yaml
-
-  ```
-
 - Deploy the App
 
   ```bash
