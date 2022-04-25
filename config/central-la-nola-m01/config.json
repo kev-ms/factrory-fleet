@@ -1,0 +1,8 @@
+{
+	"environment": "dev",
+	"region": "central",
+	"zone": "central-la",
+	"district": "central-la-nola",
+	"store": "central-la-nola-m01",
+	"domain": "central-la-nola-m01.cseretail.com"
+}
