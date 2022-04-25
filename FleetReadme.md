@@ -14,7 +14,7 @@
 
   # checkout edge-gitops branch
   cd ../edge-gitops
-  git factory-fleet
+  git checkout factory-fleet
   git pull
 
   ```
