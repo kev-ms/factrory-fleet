@@ -1,0 +1,6 @@
+{
+    "name": "factory",
+    "namespace": "default",
+    "targetDir": "apps",
+    "targets": []
+}
