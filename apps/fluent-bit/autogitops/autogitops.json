@@ -4,5 +4,7 @@
     "name": "fluent-bit",
     "namespace": "fluent-bit",
     "targetDir": "apps",
-    "targets": null
+    "targets": [
+        "store:kshahtest-central"
+    ]
 }
