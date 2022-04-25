@@ -2,5 +2,5 @@
     "name": "istio",
     "namespace": "istio-system",
     "targetDir": "bootstrap",
-    "targets": [ ]
+    "targets": [ "region:west" ]
 }
