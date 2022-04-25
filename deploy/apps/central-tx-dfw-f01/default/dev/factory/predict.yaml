@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: predictmodule
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: predictmodule
+  minReadySeconds: 10
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+  template:
+    metadata:
+      labels:
+        app: predictmodule
+    spec:
+      nodeSelector:
+        "beta.kubernetes.io/os": linux
+      containers:
+      - name: predictmodule
+        image: intelligentedge/predictmodule:0.27.0-cpuamd64
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 7777
+        resources:
+          requests:
+            cpu: 300m
+        env:
+          - name: IOTHUB_CONNECTION_STRING
+            valueFrom:
+              secretKeyRef:
+                name: azure-env
+                key: IOTHUB_CONNECTION_STRING
+          - name: IS_K8S
+            value: "true"
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: predictmodule
+spec:
+  ports:
+  - port: 7777
+  selector:
+    app: predictmodule
