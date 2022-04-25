@@ -1,0 +1,8 @@
+{
+	"environment": "dev",
+	"region": "east",
+	"zone": "east-al",
+	"district": "east-al-bham",
+	"store": "east-al-bham-m01",
+	"domain": "east-al-bham-m01.cseretail.com"
+}
