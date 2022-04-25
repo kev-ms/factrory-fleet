@@ -52,7 +52,6 @@ data:
         Flush         1
         Log_Level     info
         Daemon        off
-        Parsers_File  parsers.conf
         HTTP_Server   On
         HTTP_Listen   0.0.0.0
         HTTP_Port     2020
@@ -61,25 +60,47 @@ data:
     @INCLUDE output.conf
   output.conf: |
     [OUTPUT]
-        Name              grafana-loki
-        Url               ${LOKI_URL}
+        Name              loki
         Match             kube.var.log.containers.webv*.*
-        Labels            {job="webv-red"}
-        LabelKeys         StatusCode,Server
-        RemoveKeys        StatusCode,Server
+        Host              logs-prod-us-central1.grafana.net
+        Port              443
+        tls               on
+        tls.verify        on
+        http_user         129904
+        http_passwd       ${LOKI_PASSWORD}
+        Labels            job=webv-kshahtest
+        label_keys        $StatusCode,$Server
+        remove_keys       $StatusCode,$Server
     [OUTPUT]
-        Name              grafana-loki
-        Url               ${LOKI_URL}
+        Name              loki
         Match             kube.var.log.containers.ai-order-accuracy*.*
-        Labels            {job="aioa-red"}
-        LabelKeys         StatusCode,Category,CosmosName,stream
-        RemoveKeys        StatusCode,Category,CosmosName,stream
+        Host              logs-prod-us-central1.grafana.net
+        Port              443
+        tls               on
+        tls.verify        on
+        http_user         129904
+        http_passwd       ${LOKI_PASSWORD}
+        Labels            job=aioa-kshahtest
+        label_keys        $StatusCode,$Category,$CosmosName,$stream
+        remove_keys       $StatusCode,$Category,$CosmosName,$stream
+    [OUTPUT]
+        Name              loki
+        Match             kube.var.log.containers.imdb*.*
+        Host              logs-prod-us-central1.grafana.net
+        Port              443
+        tls               on
+        tls.verify        on
+        http_user         129904
+        http_passwd       ${LOKI_PASSWORD}
+        Labels            job=imdb-kshahtest
+        label_keys        $StatusCode,$Category,$CosmosName,$stream
+        remove_keys       $StatusCode,$Category,$CosmosName,$stream
   input-kubernetes.conf: |
     [INPUT]
         Name              tail
         Tag               kube.*
         Path              /var/log/containers/webv*.log
-        Parser            cri
+        multiline.parser  docker, cri
         DB                /var/log/flb_kube.db
         Mem_Buf_Limit     5MB
         Skip_Long_Lines   Off
@@ -88,7 +109,16 @@ data:
         Name              tail
         Tag               kube.*
         Path              /var/log/containers/ai-order-accuracy*.log
-        Parser            cri
+        multiline.parser  docker, cri
+        DB                /var/log/flb_kube.db
+        Mem_Buf_Limit     5MB
+        Skip_Long_Lines   Off
+        Refresh_Interval  10
+    [INPUT]
+        Name              tail
+        Tag               kube.*
+        Path              /var/log/containers/imdb*.log
+        multiline.parser  docker, cri
         DB                /var/log/flb_kube.db
         Mem_Buf_Limit     5MB
         Skip_Long_Lines   Off
@@ -120,32 +150,14 @@ data:
         Operation     lift
         Nested_under  kubernetes_labels
         Add_prefix    kubernetes_labels_
-  parsers.conf: |
-    [PARSER]
-        Name        json
-        Format      json
-        Time_Key    time
-        Time_Format %d/%b/%Y:%H:%M:%S %z
-        Time_Keep   Off
-    [PARSER]
-        Name        syslog
-        Format      regex
-        Regex       ^\<(?<pri>[0-9]+)\>(?<time>[^ ]* {1,2}[^ ]* [^ ]*) (?<host>[^ ]*) (?<ident>[a-zA-Z0-9_\/\.\-]*)(?:\[(?<pid>[0-9]+)\])?(?:[^\:]*\:)? *(?<message>.*)$
-        Time_Key    time
-        Time_Format %b %d %H:%M:%S
-    [PARSER]
-        Name        cri
-        Format      regex
-        Regex       ^(?<time>[^ ]+) (?<stream>stdout|stderr) (?<logtag>[^ ]*) (?<log>.*)$
-        Time_Key    time
-        Time_Format %Y-%m-%dT%H:%M:%S.%L%z
-    [PARSER]
-        Name docker
-        Format json
-        Time_Key time
-        Time_Format %Y-%m-%dT%H:%M:%S.%L
-        Time_Keep Off
-
+    [FILTER]
+        Name type_converter
+        Match kube.*
+        int_key StatusCode status_str string
+    [FILTER]
+        Name                grep
+        Match               kube.*
+        Exclude             status_str /^2.*/
 ---
 
 apiVersion: apps/v1
@@ -175,13 +187,13 @@ spec:
       containers:
         - name: fluent-bit
           imagePullPolicy: Always
-          image: grafana/fluent-bit-plugin-loki:latest
+          image: fluent/fluent-bit:1.9.0
           env:
-            - name: LOKI_URL
+            - name: LOKI_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: fluent-bit-secrets
-                  key: LokiUrl
+                  key: fluent-bit.key
           ports:
             - containerPort: 2020
           resources:
