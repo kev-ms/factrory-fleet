@@ -4,5 +4,7 @@
     "name": "imdb",
     "namespace": "imdb",
     "targetDir": "apps",
-    "targets": [ "region:west" ]
+    "targets": [
+        "region:west"
+    ]
 }
