@@ -75,7 +75,7 @@ data:
     - url: https://prometheus-prod-10-prod-us-central-0.grafana.net/api/prom/push
       basic_auth:
         username: 261866
-        password_file: /etc/prometheus/secrets/password
+        password_file: /etc/prometheus/secrets/prometheus.key
     scrape_configs:
       - job_name: 'webv-heartbeat'
         static_configs:
@@ -143,7 +143,7 @@ spec:
         - name: prometheus-secret-volume
           secret:
             secretName: prom-secrets
-  
+
         - name: prometheus-storage-volume
           emptyDir: {}
 
@@ -158,10 +158,10 @@ metadata:
       prometheus.io/scrape: 'true'
       prometheus.io/port:   '9090'
 spec:
-  selector: 
+  selector:
     app: {{gitops.name}}-server
-  type: NodePort  
+  type: NodePort
   ports:
     - port: 8080
-      targetPort: 9090 
+      targetPort: 9090
       nodePort: 30000
