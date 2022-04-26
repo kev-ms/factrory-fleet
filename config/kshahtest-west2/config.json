@@ -1,0 +1,8 @@
+{
+	"environment": "dev",
+	"region": "kshahtest",
+	"zone": "kshahtest-west2",
+	"district": "kshahtest-west2",
+	"store": "kshahtest-west2",
+	"domain": "kshahtest-west2.cseretail.com"
+}
