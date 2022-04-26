@@ -1,0 +1,10 @@
+{
+    "imageName": "prom/prometheus",
+    "imageTag": "latest",
+    "name": "prometheus",
+    "namespace": "prometheus",
+    "prometheusURL": "https://prometheus-prod-10-prod-us-central-0.grafana.net/api/prom/push",
+    "prometheusUser": "261866",
+    "targetDir": "apps",
+    "targets": null
+}
