@@ -7,6 +7,6 @@
     "prometheusUser": "261866",
     "targetDir": "apps",
     "targets": [
-        "sotre:kshahspike-central"
+        "store:kshahspike-central"
     ]
 }
