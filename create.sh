@@ -16,4 +16,6 @@ cd "$(dirname "${BASH_SOURCE[0]}")" || exit
 # duplicate this line for each cluster
 # change yourClusterName on each line
 # do not change your-fleet on each line
-# flt create --gitops --ssl cseretail.com -g your-fleet -c yourClusterName
+flt create --gitops --ssl cseretail.com -g af-prom -c central-tx-aff-101
+flt create --gitops --ssl cseretail.com -g af-prom -c east-ny-aff-102
+flt create --gitops --ssl cseretail.com -g af-prom -c west-wa-aff-103
