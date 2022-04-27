@@ -1,7 +1,7 @@
-# secretGenerator:
-# - name: prom-secrets2
-#   namespace: prometheus
-#   files:
-#   - prometheus.key
-#   options:
-#       disableNameSuffixHash: true
+secretGenerator:
+- name: prom-secrets2
+  namespace: prometheus
+  files:
+  - prometheus.key
+  options:
+      disableNameSuffixHash: true
