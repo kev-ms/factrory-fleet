@@ -1,66 +1,80 @@
 # Observability
 
-To monitor our fleet, we deploy a central monitoring cluster with fluent bit and prometheus configured to send logs and metrics to Grafana Cloud. The monitoring cluster runs WebValidate (WebV) to send requests to apps running on the other clusters in the fleet. The current design has one deployment of WebV for each app. For instance, the webv-heartbeat deployment sends requests to all of the heartbeat apps running on the fleet clusters.  Fluent bit is configured to forward WebV logs to Grafana Loki and prometheus is configured to scrape WebV metrics.  These logs and metrics are used to power a Grafana Cloud dashboard and provide insight into cluster and app availability and latency.
+To monitor our fleet, we deploy a central monitoring cluster with fluent bit and prometheus configured to send logs and metrics to Grafana Cloud. The monitoring cluster runs WebValidate (WebV) to send requests to apps running on the other clusters in the fleet. The current design has one deployment of WebV for each app. For instance, the webv-heartbeat deployment sends requests to all of the heartbeat apps running on the fleet clusters.  Fluent Bit is configured to forward WebV logs to Grafana Loki and prometheus is configured to scrape WebV metrics.  These logs and metrics are used to power a Grafana Cloud dashboard and provide insight into cluster and app availability and latency.
+
+## Prerequisites
+
+* Grafana Cloud Account
+* Azure subscription
+* Managed Identity (MI) for the fleet
+* Key Vault
+  * Must be named kv-tld
+  * Grant the MI access to the Key Vault
+
+## Key Vault Secrets
+
+### Fluent Bit Secret
+
+Follow instructions [here](https://github.com/retaildevcrews/edge-gitops/tree/apps/apps/fluent-bit#create-fluent-bit-secret) to create the required Fluent Bit secret in the kv-tld Key Vault.
+
+### Prometheus Secret
+
+Follow instructions [here](https://github.com/retaildevcrews/edge-gitops/tree/apps/apps/fluent-bit#create-fluent-bit-secret) to create the required Prometheus secret in the kv-tld Key Vault.
+
+### Execution
+
+The Key Vault secret values are retrieved (via MI) during fleet creation and stored as kubernetes secrets on each cluster in the fleet (in [fleet-vm.templ](https://github.com/retaildevcrews/akdc/blob/main/bin/.flt/fleet-vm.templ) and [akdc-pre-flux.sh](https://github.com/retaildevcrews/akdc/blob/main/vm/setup/akdc-pre-flux.sh#L23)). Additionally, the fluent-bit and prometheus namespaces are bootstrapped on each of the clusters (prior to secret creation).
 
 ## Deploy a central monitoring cluster to your fleet
 
-```bash
+- You need additional permissions to create a fleet
+  - Contact the Platform Core Team for access
+    - anflinch
+    - bartr
+    - devwag
+    - kevinshah
+    - wabrez
 
-Name your fleet
-export FLT_NAME=atx
+- Checkout your fleet branch
+- Name your fleet
 
-# must be named corp-monitoring-[your fleet name]
-flt create --gitops --ssl cseretail.com -g $FLT_NAME-fleet -c corp-monitoring-$FLT_NAME
+  ```bash
 
-```
+  # must be unique
+  flt groups | grep fleet | sort
+
+  # 10 chars max
+  # lowercase alpha and - only
+  # must begin and end with alpha
+  #### bad names will fail later ###
+  export FLT_NAME=yourAliasOrProjectName
+
+  ```
+
+- Create corp-monitoring cluster
+
+  ```bash
+
+  # must be named corp-monitoring-[your fleet name]
+  flt create --gitops --ssl cseretail.com -g $FLT_NAME-fleet -c corp-monitoring-$FLT_NAME
+
+  ```
 
 ## WebV
 
 ### Add WebV to apps/ directory
 
-Add a WebV directory to the apps/ directory in your fleet branch.
+Copy the [WebV directory](https://github.com/retaildevcrews/edge-gitops/tree/apps/apps/webv) to the apps/ directory in your fleet branch. By default, this provides you with two deployments of webv: webv-heartbeat and webv-imdb. If you do not have the imdb app deployed to any stores in your fleet, it is recommended to not include the imdb.yaml file in your branch.
 
-### Update autogitops.json (if needed)
+### Configure WebV
 
-Update the contents of the apps/webv/autogitops/autogitops.json file (if needed).
-
-### Add yaml file
-
-Add a WebV yaml file to the appropriate environment folders to monitor the heartbeat application.
-
-Use the template found [here] as a starting point.
-
-### Update yaml file with appropriate server names
-
-Update the yaml file with your fleet.
-
-```yaml
-
-          args:
-          - --sleep
-          - "5000"
-          - --prometheus
-          - --run-loop
-          - --server
-          - https://fleet-cluster-1.yourdomain.com
-          - https://fleet-cluster-2.yourdomain.com
-          - https://fleet-cluster-3.yourdomain.com
-          - --files
-          - heartbeat-benchmark.json
-          - --zone
-          - {{gitops.config.zone}}
-          - --region
-          - {{gitops.config.region}}
-          - --log-format
-          - Json
-
-```
+Follow the instructions [here](https://github.com/retaildevcrews/edge-gitops/tree/apps/apps/webv#web-validate-webv-setup) to update the contents of the heartbeat.yaml and/or imdb.yaml file.
 
 ### Update targets and deploy WebV to corp-monitoring cluster
 
 ```bash
 
-# make sure you are in the webv directory
+# make sure you are in the webv directory in your fleet branch
 cd apps/webv
 
 # should be empty
@@ -78,52 +92,20 @@ flt targets deploy
 
 ## Fluent Bit
 
-### Add fluent bit to apps/ directory
+### Add Fluent Bit to apps/ directory
 
-Add a fluent-bit directory to the apps/ directory in your fleet branch.
+Copy the [fluent-bit directory](https://github.com/retaildevcrews/edge-gitops/tree/apps/apps/fluent-bit) to the apps/ directory in your fleet branch.
 
-### Update autogitops.json
+### Configure Fluent Bit
 
-Need to update jobSuffix = $FLT_NAME.
+Follow the instructions [here](https://github.com/retaildevcrews/edge-gitops/tree/apps/apps/fluent-bit#update-fluent-bit-config) to configure the Fluent Bit deployment.
 
-### Add fluent-bit.yaml file
-
-Use the template found [here] as a starting point.
-
-If you want logs from an app other than heartbeat, imdb, or ai order accuracy, you will need to update the config map with a new output block and input block.
-
-```yaml
-
-  output.conf: |
-    [OUTPUT]
-        Name              grafana-loki
-        Url               ${LOKI_URL}
-        Match             kube.var.log.containers.webv*.*
-        Labels            {job="webv-{{gitops.jobSuffix}}"}
-        LabelKeys         StatusCode,Server
-        RemoveKeys        StatusCode,Server
-
-...
-
-  input-kubernetes.conf: |
-    [INPUT]
-        Name              tail
-        Tag               kube.*
-        Path              /var/log/containers/webv*.log
-        Parser            cri
-        DB                /var/log/flb_kube.db
-        Mem_Buf_Limit     5MB
-        Skip_Long_Lines   Off
-        Refresh_Interval  10
-
-```
-
-### Update targets and deploy fluent bit to corp-montioring cluster
+### Update targets and deploy Fluent Bit to corp-monitoring cluster
 
 ```bash
 
-# make sure you are in the webv directory
-cd apps/webv
+# make sure you are in the fluent-bit directory
+cd apps/fluent-bit
 
 # should be empty
 flt targets list
@@ -140,53 +122,20 @@ flt targets deploy
 
 ## Prometheus
 
-### Add prometheus to apps/ directory
+### Add Prometheus to apps/ directory
 
-Add a prometheus directory to the apps/ directory in your fleet branch.
+Copy the [prometheus directory](https://github.com/retaildevcrews/edge-gitops/tree/apps/apps/prometheus) to the apps/ directory in your fleet branch.
 
-### Update autogitops.json if needed
+### Configure Prometheus
 
-Update the contents of the apps/prometheus/autogitops/autogitops.json file (if needed).
+Follow the instructions [here](https://github.com/retaildevcrews/edge-gitops/tree/apps/apps/prometheus#update-prometheus-config) to configure the Prometheus deployment.
 
-### Add prometheus.yaml file
-
-Use the template found [here] as a starting point.
-
-If you want metrics from an app other than heartbeat, imdb, or ai order accuracy, you will need to update the prometheus config map scrape config list.
-
-```yaml
-
-    scrape_configs:
-      - job_name: 'webv-heartbeat'
-        static_configs:
-          - targets: [ 'webv-heartbeat.webv.svc.cluster.local:8080' ]
-        metric_relabel_configs:
-        - source_labels: [ __name__ ]
-          regex: "WebVDuration_bucket|WebVDuration_sum|WebVSummary_sum"
-          action: drop
-      - job_name: 'webv-aioa'
-        static_configs:
-          - targets: [ 'webv-aioa.webv.svc.cluster.local:8080' ]
-        metric_relabel_configs:
-        - source_labels: [ __name__ ]
-          regex: "WebVDuration_bucket|WebVDuration_sum|WebVSummary_sum"
-          action: drop
-      - job_name: 'webv-imdb'
-        static_configs:
-          - targets: [ 'webv-imdb.webv.svc.cluster.local:8080' ]
-        metric_relabel_configs:
-        - source_labels: [ __name__ ]
-          regex: "WebVDuration_bucket|WebVDuration_sum|WebVSummary_sum"
-          action: drop
-
-```
-
-### Update targets and deploy prometheus to corp-montioring cluster
+### Update targets and deploy Prometheus to corp-monitoring cluster
 
 ```bash
 
-# make sure you are in the webv directory
-cd apps/webv
+# make sure you are in the prometheus directory
+cd apps/prometheus
 
 # should be empty
 flt targets list
@@ -220,6 +169,30 @@ Copy the content in dashboard.json and import as a new dashboard in Grafana Clou
   * Name the rule $FLT_NAME App Issue
   * Rule type: Grafana managed alert
   * Folder: Platform
-* Select grafanacloud.retailedge.prom as the source
+  * Group: $FLT_NAME - App Issue
 
-TODO: Insert screen shot for Alert Config
+* Under "Create a query to be alerted on":
+  * For Query A:
+    * Select grafanacloud.retailedge.prom as the source from the drop down list.
+    * Replace {your $FLT_NAME} with your fleet name and copy the query below to the query field.
+  * For Query B:
+    * Set Operation to Reduce
+    * Set Function to Last
+    * Set Input to A
+    * Leave Mode as Strict
+  * Add another Expression (+ Expression)
+    * Name the Expression "More than 5% errors"
+    * Set Operation to Math
+    * Type in the Expression: $B > 5
+* Under "Define alert conditions"
+  * Set Condition to "More than 5% errors"
+  * Set evaluate every to 30s
+  * Set for to 1m
+
+Alert Query:
+
+```sql
+
+sum(rate(WebVDuration_count{status!="OK",server!="",origin_prometheus="corp-monitoring-{your $FLT_NAME}"}[10s])) by (server,job) / sum(rate(WebVDuration_count{server!="",origin_prometheus="corp-monitoring-{your $FLT_NAME}"}[10s])) by (server,job) * 100
+
+```
