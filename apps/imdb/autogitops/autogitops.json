@@ -6,6 +6,7 @@
     "targetDir": "apps",
     "targets": [
         "region:east",
-        "region:west"
+        "region:west",
+        "region:central"
     ]
 }
