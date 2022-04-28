@@ -5,6 +5,7 @@ This document contains a list of of tasks and best practices that should be done
 * Yaml best practices
   * The application deployment yaml should specify resource limits.
   * The application resources should be deployed to their own namespace (i.e. not the default namespace).
+    * Flux requires a namespace for all resources - even if it's "default"
 * Docker image
   * Any Docker images from Docker Hub should be signed and from a trusted, known vendor.
   * "latest" tag should be avoided if possible.
