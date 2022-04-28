@@ -37,7 +37,13 @@ spec:
             subset: v1
             port:
               number: 8080
-          weight: 100
+          weight: 50
+        - destination:
+            host: munishwebapi
+            subset: v2
+            port:
+              number: 8080
+          weight: 50
 ---
 apiVersion: networking.istio.io/v1alpha3
 kind: DestinationRule
@@ -50,3 +56,6 @@ spec:
   - name: v1
     labels:
       app: munishwebapi
+  - name: v2
+    labels:
+      version: v2

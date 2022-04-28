@@ -31,3 +31,40 @@ spec:
             - name: http
               containerPort: 8080
               protocol: TCP
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: munishwebapi-v2
+  namespace: munishwebapi
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: munishwebapi
+      version: v2
+  template:
+    metadata:
+      labels:
+        app: munishwebapi
+        version: v2
+      annotations:
+        prometheus.io/scrape: 'true'
+        prometheus.io/port: '8080'
+    spec:
+      containers:
+        - name: app
+          image: ghcr.io/retaildevcrews/pilotapp:latest
+          imagePullPolicy: Always
+
+          args:
+          - --zone
+          - central-il-chi
+          - --region
+          - central
+
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP
