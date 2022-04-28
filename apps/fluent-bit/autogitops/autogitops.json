@@ -8,6 +8,7 @@
     "namespace": "fluent-bit",
     "targetDir": "apps",
     "targets": [
-        "store:kshahspike-central"
+        "store:kshahspike-central",
+        "store:kshahspike-north"
     ]
 }
