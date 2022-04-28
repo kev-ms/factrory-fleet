@@ -34,5 +34,6 @@ spec:
       route:
         - destination:
             host: csapp
+            subset: v1
             port:
               number: 8080

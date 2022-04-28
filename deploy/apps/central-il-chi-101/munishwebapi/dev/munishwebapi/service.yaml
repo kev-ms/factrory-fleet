@@ -34,5 +34,19 @@ spec:
       route:
         - destination:
             host: munishwebapi
+            subset: v1
             port:
-              number: 8080
+              number: 30090
+          weight: 100
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: canarytest
+  namespace: munishwebapi
+spec:
+  host: munishwebapi
+  subsets:
+  - name: v1
+    labels:
+      app: munishwebapi
