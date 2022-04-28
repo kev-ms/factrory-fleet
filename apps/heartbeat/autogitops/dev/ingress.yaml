@@ -27,7 +27,7 @@ spec:
   tls:
     - hosts:
       - '{{gitops.config.domain}}'
-      secretName: ssl
+      secretName: ssl-cert
 
   rules:
   - host: '{{gitops.config.domain}}'
