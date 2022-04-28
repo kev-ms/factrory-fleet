@@ -307,11 +307,9 @@ kic cluster create
 
 ## Observability
 
-> More instructions coming soon
-
 - Retail Edge provides logs, metrics, and dashboards out of the box
 - The setup is currently "semi-automated"
-  - Send a request to the Platform Team to setup your observability stack
+- [Observability](docs/Observability.md) setup
 
 ## Customizing the CLI
 
