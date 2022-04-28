@@ -1,8 +1,21 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: heartbeat-nginx
+  namespace: ingress
+spec:
+  type: ExternalName
+  externalName: heartbeat.heartbeat.svc.cluster.local
+  ports:
+  - port: 8080
+
+---
+
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: heartbeat-ingress
-  namespace: heartbeat
+  namespace: ingress
 
   annotations:
     nginx.ingress.kubernetes.io/force-ssl-redirect: 'true'
@@ -13,17 +26,17 @@ spec:
 
   tls:
     - hosts:
-      - '*.cseretail.com'
+      - 'central-tx-bartr-m01.'
       secretName: ssl
 
   rules:
-  - host: '*.cseretail.com'
+  - host: 'central-tx-bartr-m01.'
     http:
       paths:
       - path: /heartbeat/
-        pathType: ImplementationSpecific
+        pathType: Prefix
         backend:
           service:
-            name: heartbeat
+            name: heartbeat-nginx
             port:
               number: 8080
