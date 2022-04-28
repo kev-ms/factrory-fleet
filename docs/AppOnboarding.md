@@ -30,7 +30,7 @@ This document contains a list of of tasks and best practices that should be done
 * Linter (program language specific)
 * Healthz/Readyz endpoint for monitoring and probes
   * Add a "deep" health check to verify application health
-  * Cache this result for 60 seconds to avoid DDOS target
+    * Cache this result for 60 seconds to avoid DDOS target
 * Monitoring
   * Logging: Application outputs structured logs (i.e. json) to standard out
   * Metrics: Application is updated to create and emit custom prometheus metrics at the /metrics endpoint (as desired/needed)
