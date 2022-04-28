@@ -1,8 +1,0 @@
-{
-	"environment": "dev",
-	"region": "central",
-	"zone": "central-tx",
-	"district": "central-tx-bartr",
-	"store": "central-tx-bartr-m01",
-	"domain": "central-tx-bartr-m01."
-}
