@@ -1,0 +1,64 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webmodule
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: webmodule
+  minReadySeconds: 10
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+  template:
+    metadata:
+      labels:
+        app: webmodule
+    spec:
+      nodeSelector:
+        "beta.kubernetes.io/os": linux
+      containers:
+      - name: webmodule
+        image: intelligentedge/webmodule:0.27.0-amd64
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8000
+        resources:
+          requests:
+            cpu: 200m
+        env:
+          - name: IOTHUB_CONNECTION_STRING
+            valueFrom:
+              secretKeyRef:
+                name: azure-env
+                key: IOTHUB_CONNECTION_STRING
+          - name: DB_NAME
+            value: "vision_on_edge"
+          - name: DB_HOST
+            value: "172.18.0.1"
+          - name: DB_USER
+            value: "vision_on_edge"
+          - name: DB_PASS
+            value: "vision_on_edge"
+          - name: DF_PD_VIDEO_SOURCE
+            value: "opencv"
+          - name: IS_K8S
+            value: "true"
+
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: webmodule
+  namespace: default
+spec:
+  type: ClusterIP
+  ports:
+  - port: 8000
+  selector:
+    app: webmodule
