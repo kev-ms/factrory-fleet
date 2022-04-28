@@ -1,0 +1,42 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: imdb-nginx
+  namespace: ingress
+spec:
+  type: ExternalName
+  externalName: imdb.imdb.svc.cluster.local
+  ports:
+  - port: 8080
+
+---
+
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: imdb-ingress
+  namespace: ingress
+
+  annotations:
+    nginx.ingress.kubernetes.io/force-ssl-redirect: 'true'
+    nginx.ingress.kubernetes.io/ssl-redirect: 'true'
+
+spec:
+  ingressClassName: public
+
+  tls:
+    - hosts:
+      - 'west-wa-monroe-m03.cseretail.com'
+      secretName: ssl-cert
+
+  rules:
+  - host: 'west-wa-monroe-m03.cseretail.com'
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: imdb-nginx
+            port:
+              number: 8080
