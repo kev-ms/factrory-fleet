@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cvcapturemodule
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cvcapturemodule
+  minReadySeconds: 10
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+  template:
+    metadata:
+      labels:
+        app: cvcapturemodule
+    spec:
+      nodeSelector:
+        "beta.kubernetes.io/os": linux
+      containers:
+      - name: cvcapturemodule
+        image: intelligentedge/cameramodule:0.27.0-amd64
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 9000
+        resources:
+          requests:
+            cpu: 300m
+        env:
+          - name: IOTHUB_CONNECTION_STRING
+            valueFrom:
+              secretKeyRef:
+                name: azure-env
+                key: IOTHUB_CONNECTION_STRING
+          - name: IS_K8S
+            value: "true"
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: cvcapturemodule
+  namespace: default
+spec:
+  ports:
+  - port: 9000
+  selector:
+    app: cvcapturemodule
