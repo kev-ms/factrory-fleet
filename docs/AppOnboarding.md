@@ -17,7 +17,8 @@ This document contains a list of of tasks and best practices that should be done
     * Tag with major.minor.build and major.minor where possible
   * Follow [semver](https://semver.org/) standards where possible
 * Identify any unique app dependencies that are not built in with the cluster.
-  * This will likely require additional set up work. The sooner this can be identified the better.
+  * This will likely require additional set up work by the platform team.
+  * The sooner this can be identified the better.
 * Identify any app secrets that should be stored as a k8s secret.
 * CI/CD
   * Create a CI/CD pipeline for the application.
