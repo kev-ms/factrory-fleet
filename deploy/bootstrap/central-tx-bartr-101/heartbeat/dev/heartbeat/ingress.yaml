@@ -27,7 +27,7 @@ spec:
   tls:
     - hosts:
       - 'central-tx-bartr-101.cseretail.com'
-      secretName: ssl
+      secretName: ssl-cert
 
   rules:
   - host: 'central-tx-bartr-101.cseretail.com'

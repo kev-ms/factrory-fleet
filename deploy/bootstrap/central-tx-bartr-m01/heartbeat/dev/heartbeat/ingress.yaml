@@ -27,7 +27,7 @@ spec:
   tls:
     - hosts:
       - 'central-tx-bartr-m01.'
-      secretName: ssl
+      secretName: ssl-cert
 
   rules:
   - host: 'central-tx-bartr-m01.'

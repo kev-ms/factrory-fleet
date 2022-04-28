@@ -27,7 +27,7 @@ spec:
   tls:
     - hosts:
       - 'central-tx-atx-m01.cseretail.com'
-      secretName: ssl
+      secretName: ssl-cert
 
   rules:
   - host: 'central-tx-atx-m01.cseretail.com'

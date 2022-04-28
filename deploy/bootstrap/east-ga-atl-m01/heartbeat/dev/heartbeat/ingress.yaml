@@ -27,7 +27,7 @@ spec:
   tls:
     - hosts:
       - 'east-ga-atl-m01.cseretail.com'
-      secretName: ssl
+      secretName: ssl-cert
 
   rules:
   - host: 'east-ga-atl-m01.cseretail.com'

@@ -27,7 +27,7 @@ spec:
   tls:
     - hosts:
       - 'west-wa-monroe-m04.cseretail.com'
-      secretName: ssl
+      secretName: ssl-cert
 
   rules:
   - host: 'west-wa-monroe-m04.cseretail.com'
