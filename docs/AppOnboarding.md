@@ -14,6 +14,8 @@ This document contains a list of of tasks and best practices that should be done
   * Do not publish Docker images to Docker Hub "free" due to rate limiting
 * App versioning
   * Implement app versioning and tag the images accordingly
+    * Tag with major.minor.build and major.minor where possible
+  * Follow [semver](https://semver.org/) standards where possible
 * Identify any unique app dependencies that are not built in with the cluster.
   * This will likely require additional set up work. The sooner this can be identified the better.
 * Identify any app secrets that should be stored as a k8s secret.
