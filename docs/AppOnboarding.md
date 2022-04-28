@@ -8,6 +8,9 @@ This document contains a list of of tasks and best practices that should be done
 * Docker image
   * Any Docker images from Docker Hub should be signed and from a trusted, known vendor.
   * "latest" tag should be avoided if possible.
+  * Use multi-stage Docker build process to reduce image size
+  * Do not run Docker images as root
+  * Do not publish Docker images to Docker Hub "free" due to rate limiting
 * App versioning
   * Implement app versioning and tag the images accordingly
 * Identify any unique app dependencies that are not built in with the cluster.
@@ -17,9 +20,13 @@ This document contains a list of of tasks and best practices that should be done
   * Create a CI/CD pipeline for the application.
   * Do not push image to public DockerHub.
   * Incorporate testing into the pipeline.
+  * Have separate CI and CD pipelines where possible
+    * This is required if the platform or SRE team are responsible for the deployment to the cluster
 * Unit Testing
 * Linter (program language specific)
 * Healthz/Readyz endpoint for monitoring and probes
+  * Add a "deep" health check to verify application health
+  * Cache this result for 60 seconds to avoid DDOS target
 * Monitoring
   * Logging: Application outputs structured logs (i.e. json) to standard out
   * Metrics: Application is updated to create and emit custom prometheus metrics at the /metrics endpoint (as desired/needed)
