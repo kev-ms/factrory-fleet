@@ -1,0 +1,74 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hb
+  namespace: hb
+  labels:
+    app.kubernetes.io/name: hb
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+       maxSurge: 1
+       maxUnavailable: 1
+  selector:
+    matchLabels:
+      app: hb
+  template:
+    metadata:
+      labels:
+        app: hb
+    spec:
+      containers:
+        - name: app
+          image: ghcr.io/cse-labs/heartbeat:latest
+          imagePullPolicy: Always
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP
+
+          resources:
+            limits:
+              cpu: 100m
+              memory: 64Mi
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: hb
+  namespace: hb
+spec:
+  type: ClusterIP
+  ports:
+    - port: 8080
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    app: hb
+
+# ---
+
+# apiVersion: networking.istio.io/v1beta1
+# kind: VirtualService
+# metadata:
+#   name: hb-vs
+#   namespace: hb
+# spec:
+#   hosts:
+#     - "west-wa-bellevue-m01.cseretail.com"
+#   gateways:
+#     - istio-system/istio-gateway
+#   http:
+#     - match:
+#         - uri:
+#             prefix: "/heartbeat"
+#       route:
+#         - destination:
+#             host: hb
+#             port:
+#               number: 8080
