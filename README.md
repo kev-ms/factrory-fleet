@@ -301,22 +301,11 @@ kic cluster create
 
 ```
 
-## Create a Fleet
-
-- Create a [Fleet](docs/CreateFleet.md)
-
 ## Observability
 
 - Retail Edge provides logs, metrics, and dashboards out of the box
 - The setup is currently "semi-automated"
 - [Observability](docs/Observability.md) setup
-
-## Customizing the CLI
-
-> More instructions coming soon
-
-- `flt` and `kic` can be customized / extended
-  - often without changing the Go code
 
 ## How to file issues and get help
 
