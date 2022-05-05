@@ -3,7 +3,6 @@
     "namespace": "default",
     "targetDir": "apps",
     "targets": [
-        "region:central",
         "region:east"
     ]
 }
