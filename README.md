@@ -1,4 +1,8 @@
-# Retail Edge Onboarding
+# This branch is archived
+
+> Do not use this branch for ongoing dev
+>
+> Use <https://github.com/retaildevcrews/gitops-template>
 
 ![License](https://img.shields.io/badge/license-MIT-green.svg)
 
